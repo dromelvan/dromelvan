@@ -139,5 +139,26 @@ Rails.application.routes.draw do
   resources :posts, except: [:destroy]
     
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+
+  namespace :api do
+    namespace :v1 do
+      resources :matches, only: [:show, :update] do
+        collection do
+          get 'by_date/:date', action: :by_date, as: 'by_date'
+        end
+      end
+      resources :users, only: [] do
+        collection do
+          get 'request_authentication_token'
+        end                
+      end
+      resources :match_days, only: [] do
+        collection do
+          get 'current'
+          get 'upcoming'
+        end
+      end
+    end
+  end
   
 end

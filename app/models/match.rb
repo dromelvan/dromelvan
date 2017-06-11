@@ -18,7 +18,7 @@ class Match < ActiveRecord::Base
   # remember how to do it if it turns out we want it and just comment it.
   # before_save { self.datetime = datetime + Time.zone.utc_offset }
 
-  default_scope -> { order(:datetime) }
+  default_scope -> { order(:datetime, :id) }
   scope :by_seasons, -> { joins(match_day: [premier_league: :season]) }
 
   after_initialize :init
