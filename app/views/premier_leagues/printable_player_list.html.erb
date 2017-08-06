@@ -5,7 +5,6 @@
     row = 1
   %>
   <% TeamSeasonSquadStat.joins(:team).where(season: @premier_league.season).order("teams.name asc").each do |team_season_squad_stat| %>
-  <% cache [ team_season_squad_stat, team_season_squad_stat.season, :table_simple ] do %>
   <% if column == 1 %>
   <tr class="row-<%= (row % 2 == 1 ? "odd" : "even") %>">
   <% end %>
@@ -36,6 +35,5 @@
   <%   column = 1
        row += 1
      end %>
-  <% end %>
   <% end %>
 </table>
