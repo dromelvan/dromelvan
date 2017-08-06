@@ -489,7 +489,16 @@ table.printable-player-list {
 	    font-weight: bold;
 	    display: inline-block;
 	}
-    }
+	span.player-stats {
+	    font-style: italic;
+	    span.negative {
+		color: red;
+	    }
+	    span.positive {
+		color: green;
+	    }	    
+	}
+    }    
 }
 /* Tablet screen overrides -------------------------------------------------- */
 
