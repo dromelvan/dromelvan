@@ -472,6 +472,25 @@ table.rules-table {
 	width: 130px;
     }
 }
+
+table.printable-player-list {
+    tr.row-even {
+	page-break-inside: auto;
+    }
+    
+    tr.row-odd {
+	page-break-before: always;
+    }
+    
+    td {
+	border-top: none;
+	div.position-code {
+	    min-width: 25px;
+	    font-weight: bold;
+	    display: inline-block;
+	}
+    }
+}
 /* Tablet screen overrides -------------------------------------------------- */
 
 @media only screen and (min-width: $screen-tablet-landscape-min) and (max-width: $screen-tablet-landscape-max) {

@@ -111,7 +111,11 @@ Rails.application.routes.draw do
       post 'create_current'
     end
   end
-  resources :premier_leagues, only: [:show], concerns: [:select, :table, :stats], path: 'premier-leagues'
+  resources :premier_leagues, only: [:show], concerns: [:select, :table, :stats], path: 'premier-leagues' do
+    member do
+      get 'printable_player_list', path: 'printable-player-list'
+    end
+  end
   resources :match_days, only: [:show, :update], concerns: [:select, :status_enum], path: 'match-days' do
     member do
       get 'update_stats'

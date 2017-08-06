@@ -1,0 +1,41 @@
+<% provide :title, "Available Players #{@premier_league.season.name}" %> 
+<table class="printable-player-list">
+  <%
+    column = 1
+    row = 1
+  %>
+  <% TeamSeasonSquadStat.joins(:team).where(season: @premier_league.season).order("teams.name asc").each do |team_season_squad_stat| %>
+  <% cache [ team_season_squad_stat, team_season_squad_stat.season, :table_simple ] do %>
+  <% if column == 1 %>
+  <tr class="row-<%= (row % 2 == 1 ? "odd" : "even") %>">
+  <% end %>
+    <td>
+      <h4><%= render 'teams/club_crest', team: team_season_squad_stat.team, style: :icon %> <%= team_season_squad_stat.team.name %></h4>
+      <ul>
+      <%      
+         player_season_infos = PlayerSeasonInfo
+           .where(season: team_season_squad_stat.season, team: team_season_squad_stat.team)
+           .order(:position_id).name_order
+         player_season_infos.each do |player_season_info|
+           if player_season_info.d11_team.dummy?
+      %>
+          <% if !administrator_signed_in? %>
+          <li><div class="position-code"><%= player_season_info.position.code %></div> <%= player_season_info.player.reversed_name %></li>
+          <% else
+             player_season_stat = player_season_info.player.season_stat(Season.where(status: 2).take)
+            %>
+          <li><div class="position-code"><%= player_season_info.position.code %></div> <%= player_season_info.player.reversed_name %> <%= (player_season_stat.nil? ? 0 : player_season_stat.points) %>p</li>
+          <% end %>
+        <% end %>
+      <% end %>
+      </ul>
+    </td>
+  <% column += 1
+     if column > 5 %>       
+  </tr>
+  <%   column = 1
+       row += 1
+     end %>
+  <% end %>
+  <% end %>
+</table>

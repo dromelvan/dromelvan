@@ -10,7 +10,8 @@
     <% if !@transfer_day.pending? && !@transfer_day.transfer_listings.empty? %>
     <%= render 'transfer_listings/datatable', transfer_day: @transfer_day %>  
     <% else %>
-    <p>No transfer listings have yet been registered for this transfer day.</p>
+    <p>No transfer listings have yet been registered for this transfer day.
+       The <%= link_to "printable player list", printable_player_list_premier_league_path(@transfer_day.transfer_window.season.premier_league), class: "model-link" %> contains all players who are currently not owned by a D11 team.</p>
     <% end %>
   </div>
   

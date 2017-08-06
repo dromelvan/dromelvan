@@ -7,6 +7,7 @@ class PlayerSeasonInfo < ActiveRecord::Base
   belongs_to :position
 
   default_scope -> { joins(:season).order("seasons.date desc") }
+  scope :name_order, -> { joins(:player).order("players.last_name, players.first_name")}
 
   after_initialize :init
   

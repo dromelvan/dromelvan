@@ -2,7 +2,8 @@
 <%= render layout: 'layouts/context_menu_dropdown', locals: { resource: transfer_day } do  %>
     <li class="dropdown-header"><%= transfer_day.name %></li>
     <li><%= link_to "Transfers", transfer_day_path(transfer_day), class: "model-link" %></li>
-    <li><%= link_to "Available players", show_transfer_listings_transfer_day_path(transfer_day), class: "model-link" %></li>    
+    <li><%= link_to "Available players", show_transfer_listings_transfer_day_path(transfer_day), class: "model-link" %></li>
+    <li><%= link_to "Printable player list", printable_player_list_premier_league_path(transfer_day.transfer_window.season.premier_league), class: "model-link" %></li>
     <li><%= link_to "Bids", show_transfer_bids_transfer_day_path(transfer_day), class: "model-link" %></li>
     <li><%= link_to "#{transfer_day.transfer_window.name}", transfer_window_path(transfer_day.transfer_window), class: "model-link" %></li>
     <% if administrator_signed_in? %>
