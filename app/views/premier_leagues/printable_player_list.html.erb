@@ -23,7 +23,7 @@
           <% else
              player_season_stat = player_season_info.player.season_stat(Season.where(status: 2).take)
             %>
-          <li><div class="position-code"><%= player_season_info.position.code %></div> <%= player_season_info.player.reversed_name %> <%= (player_season_stat.nil? ? 0 : player_season_stat.points) %>p</li>
+          <li><div class="position-code"><%= player_season_info.position.code %></div> <%= player_season_info.player.reversed_name %> <i>(<%= (player_season_stat.nil? ? "0/0/0" : "#{player_season_stat.games_started}/#{player_season_stat.substitutions_on}/#{player_season_stat.points}") %>p)</i></li>
           <% end %>
         <% end %>
       <% end %>
