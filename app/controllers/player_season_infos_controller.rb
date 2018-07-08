@@ -23,12 +23,14 @@ class PlayerSeasonInfosController < ApplicationController
 
   def create_current
     player = Player.find(params[:id])
+    team = Team.find(1)
     position = Position.find(6)
     player_season_infos = PlayerSeasonInfo.by_player(player)
     if player_season_infos.any?
+      team = player_season_infos.first.team
       position = player_season_infos.first.position
     end
-    PlayerSeasonInfo.create(player: player, season: Season.current, position: position)
+    PlayerSeasonInfo.create(player: player, season: Season.current, team: team, position: position)
     if !PlayerSeasonStat.where(player: player, season: Season.current).any? then
       PlayerSeasonStat.create(player: player, season: Season.current)
     end
