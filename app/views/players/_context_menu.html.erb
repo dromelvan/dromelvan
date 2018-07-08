@@ -35,7 +35,7 @@
            if !player_season_info.nil? %>
         <li><%= link_to "Edit Current Player Season Info", edit_player_season_info_path(player_season_info), data: { toggle: "modal", target: "#d11-modal" } %></li>
         <% else %>        
-        <li><%= link_to "Insert Player Season Info", create_current_player_season_info_path(player), method: :post, data: {confirm: 'Undoing this action is complicated. Are you sure you want to insert the season info?'} %></li>
+        <li><%= link_to "Insert Player Season Info", create_current_player_season_info_path(player), method: :post %></li>
         <% end %>
         <% if !defined?(whoscored_id).nil? %>
             <li><%= link_to "Update WhoScored ID", update_whoscored_id_player_path(player, whoscored_id), method: :post %></li>
