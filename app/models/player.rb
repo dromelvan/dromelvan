@@ -12,10 +12,10 @@ class Player < ActiveRecord::Base
 
   has_attached_file :player_photo, styles: { icon: [ "16x16^", :png], tiny: ["32x32^", :png], small: ["64x64^", :png], large: ["128x128^", :png] },
                                    convert_options: {
-                                    icon: "-gravity Center -crop 16x16+0+0 +repage",
-                                    tiny: "-gravity Center -crop 32x32+0+0 +repage",
-                                    small: "-gravity Center -crop 64x64+0+0 +repage",
-                                    large: "-gravity Center -crop 128x128+0+0 +repage"
+                                    icon: "-gravity North -crop 16x16+0+0 +repage",
+                                    tiny: "-gravity North -crop 32x32+0+0 +repage",
+                                    small: "-gravity North -crop 64x64+0+0 +repage",
+                                    large: "-gravity North -crop 128x128+0+0 +repage"
                                     },
                                    default_url: "/assets/missing/player-photo-:style.png",
                                    url: "/images/player-photo/:style/:id.:extension",
