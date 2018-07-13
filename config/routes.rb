@@ -127,7 +127,10 @@ Rails.application.routes.draw do
     end
     member do
       post 'update_match_stats'
-    end    
+    end
+    member do
+      get 'postpone'
+    end
   end
   resources :d11_leagues, only: [:show], concerns: [:select, :table, :d11_teams], path: 'd11-leagues'
   resources :d11_match_days, only: [:show, :update], concerns: [:select], path: 'd11-match-days'
