@@ -49,7 +49,19 @@ class MatchesController < ApplicationController
       match_stats_file.tempfile.unlink
     end
   end
-  
+
+  def postpone 
+    match = Match.find(params[:id])
+    if !match.postponed?
+      match.postpone
+      match.save
+      flash[:success] = "Match postponed."
+    else
+      flash[:danger] = "The match was already postponed."
+    end
+    redirect_to match.match_day
+  end
+      
   private
     def update_params
       params.require(:match).permit(:datetime)

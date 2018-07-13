@@ -10,10 +10,13 @@
     <li class="dropdown-header">Date & Time</li>
     <li>
         <%= form_for(match) do |f| %>
-            <% default_datetime = (match.postponed? ? match.match_day.date.to_datetime : match.datetime) %>
+            <% default_datetime = (match.postponed? ? match.match_day.date.to_datetime.change(hour: 17) : match.datetime) %>
             <%= render 'layouts/inline_datetimepicker', f: f, resource: match, field: :datetime, default_datetime: default_datetime, button_text: "Change" %>                
         <% end %>
-    </li>            
+    </li>
+    <% if !match.postponed? %>
+    <li><%= link_to "Postpone", postpone_match_path(match) %></li>
+    <% end %>
     <li class="dropdown-header">Status</li>
     <li><%= link_to "Pend", pend_match_path(match) %></li>
     <li><%= link_to "Activate", activate_match_path(match) %></li>
