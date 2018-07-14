@@ -15,7 +15,7 @@
             <li><%= link_to "Remove from Transfer List", transfer_listing_path(TransferDay.current.transfer_listings.where(player: player).take), method: :delete %></li>
            <% end %>   
         <% end %>
-	<% if !TransferDay.current.nil? && TransferDay.current.active? && player.transfer_listed? %>
+	<% if !TransferDay.current.nil? && TransferDay.current.active? && player.transfer_listed? && !current_user.active_d11_team.nil? %>
 	    <%
 		d11_team_season_squad_stat = current_user.active_d11_team.d11_team_season_squad_stats.where(season: Season.current).first
 		transfer_bid = TransferDay.current.transfer_bids.where(player: player, d11_team: (!d11_team_season_squad_stat.nil? ? d11_team_season_squad_stat.d11_team : nil)).first
