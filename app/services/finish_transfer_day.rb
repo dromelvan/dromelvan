@@ -4,7 +4,16 @@ class FinishTransferDay
   end
   
   def finish
-    if @transfer_day.active?    
+    if @transfer_day.active?
+      # Skip all this if the transfer day is a live auction transfer day.
+      if !@transfer_day.transfers.empty?
+	@transfer_day.status = :finished
+	@transfer_day.save
+	@transfer_day.transfer_window.status = :finished
+	@transfer_day.transfer_window.save
+	return	
+      end
+      
       TransferDay.transaction do
 	season = @transfer_day.transfer_window.season
 	
@@ -87,7 +96,8 @@ class FinishTransferDay
 	@transfer_day.status = :finished
 	@transfer_day.save
 
-        # Insert a new transfer day if all teams aren't full.	
+        # Insert a new transfer day if all teams aren't full.
+        new_transfer_day = false
 	d11_teams.keys.each do |d11_team_id|
 	  if d11_teams[d11_team_id][:positions_available_count] > 0
 	    transfer_day = TransferDay.create(transfer_window: @transfer_day.transfer_window, transfer_day_number: @transfer_day.transfer_day_number + 1, status: :active, datetime: @transfer_day.datetime + 1.day)
@@ -98,10 +108,16 @@ class FinishTransferDay
 	      player_season_stat = player_season_info.player.season_stat(player_season_info.season)
 	      transfer_listing.init_from(player_season_stat)
 	      transfer_listing.save
-	    end	    
+	    end
+	    new_transfer_day = true
 	    break
 	  end	  
-	end	
+	end
+	
+	if !new_transfer_day
+	  @transfer_day.transfer_window.status = :finished
+	  @transfer_day.transfer_window.save	  
+	end
       end
     end
   end  

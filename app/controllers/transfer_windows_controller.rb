@@ -20,7 +20,7 @@ class TransferWindowsController < ApplicationController
     super
     datetime = @transfer_window.datetime
     datetime = datetime + 2.days
-    TransferDay.create(transfer_window: TransferWindow.current, transfer_day_number: 1, status: :pending, datetime: datetime)
+    TransferDay.create(transfer_window: @transfer_window, transfer_day_number: 1, status: :pending, datetime: datetime)
   end
   
   def resource_params

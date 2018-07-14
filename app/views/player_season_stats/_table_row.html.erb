@@ -1,5 +1,5 @@
 <% player_season_info = PlayerSeasonInfo.by_player_and_season(player_season_stat.player, player_season_stat.season) %>
-<% if !current_user.nil? && player_season_info.d11_team == current_user.active_d11_team && player_season_stat.player.transfer_listed? %>
+<% if TransferDay.current.pending? && !current_user.nil? && player_season_info.d11_team == current_user.active_d11_team && player_season_stat.player.transfer_listed? %>
 <tr class="transfer-listed">
 <% else %>
 <tr>
