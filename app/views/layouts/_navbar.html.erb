@@ -37,7 +37,7 @@
             <% if !D11League.current.nil? %>
             <li><%= link_to "D11 Teams", main_app.show_d11_teams_d11_league_path(D11League.current) %></li>
             <% end %>
-            <li><%= link_to "Season History", main_app.seasons_path %></li>                                  
+            <li><%= link_to "Season History", main_app.seasons_path %></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -71,6 +71,9 @@
             <% if administrator_signed_in? %>
             <li class="dropdown-header">Administration</li>
             <li><%= link_to "New Player", main_app.new_player_path, data: { toggle: "modal", target: "#d11-modal" } %></li>
+            <% if TransferWindow.current.finished? %>
+                <li><%= link_to "New Transfer Window", main_app.new_transfer_window_path, class: "model-link", data: { toggle: "modal", target: "#d11-modal" } %></li>
+            <% end %>            
             <li><%= link_to "Rails Admin", rails_admin.dashboard_path %></li>            
             <% end %>                      
           </ul>

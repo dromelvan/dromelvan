@@ -1,0 +1,2 @@
+<% autofocus ||= false %>
+<%= f.collection_select :d11_match_day_id, D11MatchDay.where(d11_league: D11League.current), :id, :name, { multiple: false }, { class: "form-control", required: true, autofocus: autofocus}  %>

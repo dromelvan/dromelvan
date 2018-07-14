@@ -1,124 +1,146 @@
 @import "colours";
 
-div.context-menu.dropdown.open {
-    ul.dropdown-menu {
-        div.datetimepicker-container {
-            padding-left: 20px;
-            padding-right: 20px;
-            
-            div.datetimepicker {
-                min-width: 175px;
-                
-                input.datetimepicker {
-                    display: none;
-                }                
-                table {
-                    background-color: transparent;
-                    th {
-                        font-size: 12px;
-                        border: none;
-                    }
-                    
-                    td {
-                        color: $dropdown-header-color;
-                        font-size: 12px;
-                        border-top: none;
-                        border-bottom: 1px solid $table-border-color;
-                        
-                        span {
-                            margin: 0px;
-                            border-radius: 0px;
-                        }
-                    }
-
-                    th,td {
-                        border-radius: 0px;
-                        padding: 0px;
-                        min-width: 25px;
-                        height: 25px;
-                        line-height: 25px;
-                    }
-                    
-                    td.separator:hover {
-                        background-color: transparent;
-                    }
-                    
-                    td.new,
-                    td.old {
-                        color: $dropdown-link-color;
-                    }
-                    
-                    td.active,
-                    td:hover {
-                        background-color: $d11-blue-gray;
-                        color: white;
-                    }                    
-                }
-
-                li.picker-switch.accordion-toggle {
-                    table {
-                        tbody {
-                            tr:first-child {
-                                td {
-                                    border-top: 1px solid $table-border-color;
-                                }
-                            }
-                        }
-                    }
-                }
-                                
-                div.datepicker {
-                    table {
-                        tbody {
-                            tr:last-child {
-                                td {
-                                    border-bottom: none;
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                div.timepicker {
-                    table {
-                        tbody {
-                            tr {
-                                td {
-                                    height: 30px;
-                                    line-height: 30px;
-                                    
-                                    a {
-                                        padding: 0px;
-                                        border: none;
-                                    }
-                                    
-                                    span {
-                                        height: 30px;
-                                        line-height: 30px;
-                                    }                        
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            li.picker-switch.accordion-toggle,
-            div.timepicker {
-                td:hover {
-                    span {
-                        color: white;
-                        background-color: transparent;
-                    }
-                }
-            }
-            
-            button.form-button {
-                margin-top: 12px;
-                margin-bottom: 6px;
+div.datetimepicker-container {
+    padding-left: 20px;
+    padding-right: 20px;
+    
+    div.datetimepicker {
+        min-width: 175px;
+        
+        input.datetimepicker {
+            display: none;
+        }                
+        table {
+            background-color: transparent;
+            th {
                 font-size: 12px;
+                border: none;
+            }
+            
+            td {
+                color: $dropdown-header-color;
+                font-size: 12px;
+                border-top: none;
+                border-bottom: 1px solid $table-border-color;
+                
+                span {
+                    margin: 0px;
+                    border-radius: 0px;
+                }
             }
 
+            th,td {
+                border-radius: 0px;
+                padding: 0px;
+                min-width: 25px;
+                height: 25px;
+                line-height: 25px;
+            }
+            
+            td.separator:hover {
+                background-color: transparent;
+            }
+            
+            td.new,
+            td.old {
+                color: $dropdown-link-color;
+            }
+            
+            td.active,
+            td:hover {
+                background-color: $d11-blue-gray;
+                color: white;
+            }                    
+        }
+
+        li.picker-switch.accordion-toggle {
+            table {
+                tbody {
+                    tr:first-child {
+                        td {
+                            border-top: 1px solid $table-border-color;
+                        }
+                    }
+                }
+            }
+        }
+                        
+        div.datepicker {
+            table {
+                tbody {
+                    tr:last-child {
+                        td {
+                            border-bottom: none;
+                        }
+                    }
+                }
+            }
+        }
+        
+        div.timepicker {
+            table {
+                tbody {
+                    tr {
+                        td {
+                            height: 30px;
+                            line-height: 30px;
+                            
+                            a {
+                                padding: 0px;
+                                border: none;
+                            }
+                            
+                            span {
+                                height: 30px;
+                                line-height: 30px;
+                            }                        
+                        }
+                    }
+                }
+            }
         }
     }
+    
+    li.picker-switch.accordion-toggle,
+    div.timepicker {
+        td:hover {
+            span {
+                color: white;
+                background-color: transparent;
+            }
+        }
+    }
+    
+    button.form-button {
+        margin-top: 12px;
+        margin-bottom: 6px;
+        font-size: 12px;
+    }
+
+}
+
+div.modal-body {
+    div.datetimepicker-container {
+        padding-left: 0px;
+        padding-right: 0px;
+        
+        table {
+            border-left: 1px solid $table-border-color;
+            border-right: 1px solid $table-border-color;
+        }
+        button.form-button {
+            display: none;
+        }
+        
+        td.day,
+        span.timepicker-minute,
+        span.timepicker-hour {
+            color: black;
+        }
+        
+        td.new,
+        td.old {
+            color: $dropdown-link-color;
+        }        
+    }    
 }

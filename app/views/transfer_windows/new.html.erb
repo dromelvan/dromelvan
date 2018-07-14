@@ -1,0 +1,30 @@
+<%
+  provide :title, "Insert New Transfer Window"
+  provide :save_button_text, "Insert Transfer Window"
+%>
+
+<h2>New Transfer Window</h2>
+
+<div class="section">
+  <div class="image-container player-photo related-section">
+    <%= image_tag "context/new_transfer.png", alt: "New transfer." %>
+  </div>  
+  <div class="main-section">
+    <%= form_for @transfer_window, html: { method: :post } do |f| %>
+    <%= hidden_field(:transfer_window, :season_id) %>
+    <%= hidden_field(:transfer_window, :status) %>
+    <%= hidden_field(:transfer_window, :transfer_window_number) %>
+    <fieldset>
+      <div class="form-group">
+        <%= f.label :d11_match_day_id, "D11 Match Day:" %>
+        <%= render 'd11_match_days/select', autofocus: true, f: f %>
+      </div>            
+      <div class="form-group">
+        <%= f.label :datetime, "Date & Time" %>
+        <%= render 'layouts/inline_datetimepicker', f: f, resource: @transfer_window, field: :datetime, default_datetime: @transfer_window.datetime %>                
+      </div>
+    </fieldset>
+    <% end %>
+  </div>
+
+</div>

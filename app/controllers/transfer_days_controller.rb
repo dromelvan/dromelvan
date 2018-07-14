@@ -10,7 +10,13 @@ class TransferDaysController < ApplicationController
   def activate
     transfer_day = TransferDay.find(status_enum_params[:id])
     update_status(transfer_day, :active)
-        
+
+    transfer_window = transfer_day.transfer_window
+    if transfer_window.pending?
+      transfer_window.status = :active
+      transfer_window.save
+    end
+    
     PlayerSeasonInfo.joins(:team).joins(:d11_team).where(season: Season.current, teams: { dummy: false}, d11_teams: { dummy: true}).each do |player_season_info|
       transfer_listing = TransferListing.new(transfer_day: transfer_day, player: player_season_info.player, team: player_season_info.team, d11_team: player_season_info.d11_team,
 			       position: player_season_info.position, new_player: false)
