@@ -21,6 +21,9 @@ class D11TeamSeasonSquadStat < ActiveRecord::Base
   end
 
   def position_available(position)
+    if d11_team.dummy?
+      return true
+    end
     count = PlayerSeasonInfo.where(d11_team: d11_team).where(season: season).where(position: position).size
     if position.id == 1
       return count < 1

@@ -1,0 +1,29 @@
+<%
+  provide :title, "Transfer Player"
+  provide :save_button_text, "Transfer"
+%>
+
+<h2><%= @transfer.player.name %></h2>
+
+<div class="section">
+  <div class="image-container player-photo related-section">
+    <%= render 'players/player_photo', player: @transfer.player %>
+  </div>
+  <div class="main-section">
+    <%= form_for @transfer, html: { method: :post } do |f| %>
+    <%= hidden_field(:transfer, :player_id) %>
+    <%= hidden_field(:transfer, :transfer_day_id) %>    
+    <fieldset>
+      <div class="form-group">
+        <%= f.label :d11_team_id, "D11 Team:" %>
+        <%= render 'd11_teams/select', f: f, autofocus: true %>
+      </div>      
+      <div class="form-group">
+        <%= f.label :fee, "Fee:" %>
+        <%= f.text_field :fee, value: player_value(@transfer.fee), required: true %>
+      </div>      
+    </fieldset>
+    <% end %>
+  </div>
+
+</div>
