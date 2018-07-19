@@ -47,8 +47,15 @@ class Player < ActiveRecord::Base
     name
   end
   
-  def reversed_name
-    "#{last_name} #{first_name}".strip    
+  def reversed_name(max_length = 1000)
+    name = "#{last_name} #{first_name}".strip
+    if name.length > max_length
+      name = "#{last_name} #{first_name[0]}".strip
+    end
+    if name.length > max_length
+      name = "#{last_name}".strip
+    end    
+    name    
   end
 
   def short_name

@@ -19,7 +19,7 @@
            if player_season_info.d11_team.dummy?
       %>
           <% if !administrator_signed_in? %>
-          <li><div class="position-code"><%= player_season_info.position.code %></div> <%= player_season_info.player.reversed_name %></li>
+          <li><div class="position-code"><%= player_season_info.position.code %></div> <%= player_season_info.player.reversed_name(19) %></li>
           <% else
              player_season_stat = player_season_info.player.season_stat(Season.where(status: 2).take)
             %>
