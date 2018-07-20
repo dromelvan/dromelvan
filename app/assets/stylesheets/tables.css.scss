@@ -474,6 +474,7 @@ table.rules-table {
 }
 
 table.printable-player-list {
+
     tr.row-even {
 	page-break-inside: auto;
     }
@@ -676,11 +677,17 @@ table.printable-player-list {
 }
 
 @media only print {
+    div.printable-player-list {
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+    }
     table.printable-player-list {	
+	margin-bottom: 0px;
+	
 	td {
-	    font-size: 10px;
+	    font-size: 9px;
 	    h4 {
-		font-size: 10px;
+		font-size: 9px;
 	    }
 	}
     }
