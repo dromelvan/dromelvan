@@ -2,7 +2,7 @@ class MatchesController < ApplicationController
   layout "modal", only: [ :edit_match_stats ]
   include Select, StatusEnum
 
-  before_action :authorize_administrator,  only: [:pend, :activate, :finish, :update, :edit_match_stats, :update_match_stats]
+  before_action :authorize_administrator,  only: [:pend, :activate, :finish, :update, :postpone, :edit_match_stats, :update_match_stats]
 
   def update
     @match = Match.find(params[:id])
