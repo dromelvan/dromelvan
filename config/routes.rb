@@ -147,5 +147,32 @@ Rails.application.routes.draw do
   resources :posts, except: [:destroy]
     
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+
+  namespace :api do
+    namespace :v1 do
+      resources :seasons, only: [:index] do
+        collection do
+          get 'current'
+        end
+      end
+      resources :matches, only: [:show, :update] do
+        collection do
+          get 'by_date/:date', action: :by_date, as: 'by_date'
+        end
+      end
+      resources :users, only: [] do
+        collection do
+          get 'request_authentication_token'
+        end                
+      end
+      resources :match_days, only: [:show] do
+        collection do
+          get 'current'
+          get 'upcoming'
+          get 'by_season/:season_id', action: :by_season, as: 'by_season'
+        end
+      end
+    end
+  end
   
 end

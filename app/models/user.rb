@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :owned_d11_teams, class_name: :D11Team, foreign_key: :owner_id, dependent: :restrict_with_exception
   has_many :co_owned_d11_teams, class_name: :D11Team, foreign_key: :co_owner_id, dependent: :restrict_with_exception
   has_many :posts, dependent: :restrict_with_exception
-
+  
   def active_d11_team
     Rails.cache.fetch("#{cache_key}/active_d11_team", expires_in: 12.hours) do
       season = Season.current    
@@ -43,5 +43,10 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,20]
       user.name = auth.info.name
     end
-  end         
+  end
+  
+  def update_authentication_token
+    self.authentication_token = SecureRandom.base64(64)
+  end
+  
 end

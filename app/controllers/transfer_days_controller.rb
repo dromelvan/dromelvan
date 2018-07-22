@@ -39,6 +39,7 @@ class TransferDaysController < ApplicationController
   def finish
     transfer_day = TransferDay.find(status_enum_params[:id])
     finish_transfer_day = FinishTransferDay.new(transfer_day)
+puts("IDD: #{transfer_day.id}")    
     finish_transfer_day.finish
     redirect_to transfer_day
   end
