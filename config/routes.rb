@@ -142,6 +142,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :seasons, only: [:index] do
+        collection do
+          get 'current'
+        end
+      end
       resources :matches, only: [:show, :update] do
         collection do
           get 'by_date/:date', action: :by_date, as: 'by_date'
@@ -152,10 +157,11 @@ Rails.application.routes.draw do
           get 'request_authentication_token'
         end                
       end
-      resources :match_days, only: [] do
+      resources :match_days, only: [:show] do
         collection do
           get 'current'
           get 'upcoming'
+          get 'by_season/:season_id', action: :by_season, as: 'by_season'
         end
       end
     end
