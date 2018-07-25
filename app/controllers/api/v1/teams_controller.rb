@@ -1,6 +1,16 @@
 class Api::V1::TeamsController < Api::V1::BaseController
   
-  def lineup
+  def named
+    name = params[:name]
+    team = Team.named(name).first
+    if team.nil?
+      not_found
+    else    
+      render json: team
+    end
+  end
+  
+  def squad
     team = Team.find(params[:id])
     json = TeamSerializer.new(team).as_json
     json[:players] = []

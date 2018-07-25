@@ -167,7 +167,8 @@ Rails.application.routes.draw do
       end
       resources :teams, only: [] do
         collection do
-          get ':id/lineup', action: :lineup, as: 'lineup'
+          get 'named/:name', action: :named, as: 'named'
+          get ':id/squad', action: :squad, as: 'squad'
         end
       end      
       resources :match_days, only: [:show] do
