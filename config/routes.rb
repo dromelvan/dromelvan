@@ -165,6 +165,11 @@ Rails.application.routes.draw do
           get 'request_authentication_token'
         end                
       end
+      resources :teams, only: [] do
+        collection do
+          get ':id/lineup', action: :lineup, as: 'lineup'
+        end
+      end      
       resources :match_days, only: [:show] do
         collection do
           get 'current'
