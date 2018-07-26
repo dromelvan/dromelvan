@@ -170,7 +170,12 @@ Rails.application.routes.draw do
           get 'named/:name', action: :named, as: 'named'
           get ':id/squad', action: :squad, as: 'squad'
         end
-      end      
+      end
+      resources :players, only: [:show] do
+        collection do
+          get 'named/:name', action: :named, as: 'named'
+        end
+      end            
       resources :match_days, only: [:show] do
         collection do
           get 'current'
