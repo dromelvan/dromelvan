@@ -36,7 +36,7 @@ class MatchesController < ApplicationController
     update_table_stats = params[:update_table_stats] == "true"
     begin
       match = Match.find(params[:id])
-      session[:upload_result] = UploadMatchStatsFile.new(match, update_table_stats).upload(match_stats_file)
+      session[:upload_result] = UploadMatchStatsJsonFile.new(match, update_table_stats).upload(match_stats_file)
 
       if !session[:upload_result][:validation_errors].any? && !session[:upload_result][:data_errors].any? && !session[:upload_result][:missing_players].any?
         flash[:success] = [ "Match data updated." ].concat(session[:upload_result][:data_updates])

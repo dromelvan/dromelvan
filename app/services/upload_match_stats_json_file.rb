@@ -21,6 +21,7 @@ class UploadMatchStatsJsonFile < UploadJsonFile
       if @match.away_team.whoscored_id != match.away_team.whoscored_id
         data_errors.concat [ "Invalid team. The match away team has whoscored_id #{@match.away_team.whoscored_id} but the uploaded file contains away team whoscored_id #{match.away_team.whoscored_id}." ]        
       end
+      season = @match.match_day.premier_league.season
       
       # Check that all the players exist.
       player_match_stats = {}
@@ -35,7 +36,7 @@ class UploadMatchStatsJsonFile < UploadJsonFile
           team_whoscored_id = player_match_stat.team.whoscored_id
           position_id = player_match_stat.position
           team_id = (@match.home_team.whoscored_id == team_whoscored_id ? @match.home_team_id : @match.away_team_id)
-          if !Player.joins(player_season_infos: :team).where(player_season_infos: { season_id: Season.current.id }, teams: {whoscored_id: team_whoscored_id}, parameterized_name: player_name.parameterize).any?
+          if !Player.joins(player_season_infos: :team).where(player_season_infos: { season: season }, teams: {whoscored_id: team_whoscored_id}, parameterized_name: player_name.parameterize).any?
               team_name = player_match_stat.team.name
               missing_players.concat [ { player_whoscored_id: player_whoscored_id, player_name: player_name, team_id: team_id, team_name: team_name, position_id: position_id, alternative_players: Player.named(player_name, :or) } ]
           end          
@@ -101,7 +102,7 @@ class UploadMatchStatsJsonFile < UploadJsonFile
           # If we can't find a player with a given whoscored_id, find the one with the same name in the same team and change his whoscored_id.
           # If there is no such player then the validation will have failed before we get here.
           if player.nil?            
-            player = Player.joins(player_season_infos: :team).where(player_season_infos: { season_id: Season.current.id }, teams: {whoscored_id: team.whoscored_id}, parameterized_name: player_match_stat_json.player.name).take
+            player = Player.joins(player_season_infos: :team).where(player_season_infos: { season: season }, teams: {whoscored_id: team.whoscored_id}, parameterized_name: player_match_stat_json.player.name.parameterize).take
             old_whoscored_id = player.whoscored_id
             player.whoscored_id = whoscored_id
             player.save
@@ -127,7 +128,7 @@ class UploadMatchStatsJsonFile < UploadJsonFile
             player_season_info.save
 
             # Remove existing player_match_stats for this match day so the player doesn't end up playing two matches for the same D11 team
-            # the same match day. NOTE: This means we have to change things manually before uploading postponed matches to avoid screwing things up.
+            # the same match day. NOTE: This means we might have to change things manually after uploading postponed matches to avoid screwing things up.
             PlayerMatchStat.joins(:match).where(matches: { match_day_id: @match.match_day_id }, player_id: player.id).each do |player_match_stat|
               if player_match_stat.match != @match
                 if player_match_stat.did_not_participate?                
