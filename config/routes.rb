@@ -150,7 +150,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :seasons, only: [:index] do
+      resources :seasons, only: [:index, :show] do
         collection do
           get 'current'
         end

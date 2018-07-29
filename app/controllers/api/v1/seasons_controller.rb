@@ -5,6 +5,11 @@ class Api::V1::SeasonsController < Api::V1::BaseController
     render json: seasons
   end
   
+  def show
+    season = Season.find(params[:id])  
+    render json: season
+  end
+
   def current
     season = Season.current
     
