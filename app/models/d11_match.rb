@@ -7,7 +7,7 @@ class D11Match < ActiveRecord::Base
 
   enum status: [ :pending, :active, :finished ]
   
-  default_scope -> { joins(:d11_match_day).order('d11_match_days.date').readonly(false) }
+  default_scope -> { joins(:d11_match_day).order('d11_match_days.date, d11_matches.id').readonly(false) }
   scope :by_seasons, -> { joins(d11_match_day: [d11_league: :season]) }
 
   after_initialize :init  
