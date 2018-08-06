@@ -56,7 +56,7 @@ class PlayerMatchStat < ActiveRecord::Base
  
   def update_points
     if !match.nil? && !match.match_day.premier_league.season.legacy?
-      # Calculates points for season 2014-2015 rules
+      # Calculates points for season 2018-2019 rules
       self.points = 0
       
       # Let's not do this now that midfielders should get a point for clean sheets.
