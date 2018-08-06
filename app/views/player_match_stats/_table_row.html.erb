@@ -9,7 +9,7 @@
     <td class="goals-column"><%= (player_match_stat.goals > 0 ? player_match_stat.goals : '&nbsp;'.html_safe) %></td>  
     <td class="own-goals-column"><%= (player_match_stat.own_goals > 0 ? player_match_stat.own_goals : '&nbsp;'.html_safe) %></td>  
     <td class="assists-column"><%= (player_match_stat.goal_assists > 0 ? player_match_stat.goal_assists : '&nbsp;'.html_safe) %></td>
-    <td class="goals-conceded-column"><%= (player_match_stat.position.defender? ? player_match_stat.goals_conceded : '&nbsp;'.html_safe) %></td>  
+    <td class="goals-conceded-column"><%= (player_match_stat.count_goals_conceded? ? player_match_stat.goals_conceded : '&nbsp;'.html_safe) %></td>  
     <td class="yellow-card-column">
       <% if player_match_stat.yellow_card_time > 0 %>
         <%= image_tag "match-events/yellow-card.png", alt: "Yellow card (#{player_match_stat.yellow_card_time})", title: "Yellow card (#{player_match_stat.yellow_card_time})", class: "match-event-icon" %>  

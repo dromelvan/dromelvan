@@ -37,7 +37,7 @@
         <% else %>        
         <li><%= link_to "Insert Player Season Info", create_current_player_season_info_path(player), method: :post %></li>
         <% end %>
-	<% if !TransferDay.current.nil? && TransferDay.current.active? %>
+	<% if !TransferDay.current.nil? && TransferDay.current.active? && player.transfer_listed? %>
         <li><%= link_to "Transfer Player", new_transfer_path(transfer: { player_id: player.id }), data: { toggle: "modal", target: "#d11-modal" } %></li>	    
         <% end %>
         <% if !defined?(whoscored_id).nil? %>

@@ -16,7 +16,7 @@
     <fieldset>
       <div class="form-group">
         <%= f.label :d11_team_id, "D11 Team:" %>
-        <%= render 'd11_teams/select', f: f, autofocus: true %>
+        <%= render 'd11_teams/select', f: f, season: Season.current, autofocus: true %>
       </div>      
       <div class="form-group">
         <%= f.label :fee, "Fee:" %>

@@ -85,7 +85,13 @@ class TransfersController < ApplicationController
       player_season_info.save
       
       if !d11_team.dummy?
-        flash[:success] = "Player #{player.name} has been transferred to #{d11_team.name} for a fee of #{transfer.fee / 10.0}."
+        flash[:success] = "Player #{player.name} has been transferred to #{d11_team.name} for a fee of #{transfer.fee / 10.0} million."
+        
+	d11_team_season_squad_stat = d11_team.d11_team_season_squad_stats.where(season: season).take
+	if d11_team_season_squad_stat.max_bid <= 0
+	  flash[:info] = "Team #{d11_team.name} has a full squad."
+	end
+        
         redirect_to d11_team
       else
         flash[:success] = "Player #{player.name} has been removed from the D11 team."

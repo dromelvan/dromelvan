@@ -44,18 +44,28 @@ class PlayerMatchStat < ActiveRecord::Base
   def participated?
     self.starting_lineup? || (!self.substitution_on_time.nil? && self.substitution_on_time > 0)  
   end
+  
+  def count_goals_conceded?
+    if participated?
+      if position.defender? || (position.id == 4 && goals_conceded == 0)
+        return true
+      end
+    end
+    false
+  end
  
   def update_points
     if !match.nil? && !match.match_day.premier_league.season.legacy?
       # Calculates points for season 2014-2015 rules
       self.points = 0
       
-      if !participated? || !self.position.defender?
-        # TODO: Maybe move this to the code where match stats are uploaded and transferred to PlayerMatchStat objects.
-        if !self.goals_conceded.nil? && self.goals_conceded >= 0
-          self.goals_conceded = 0
-        end
-      end
+      # Let's not do this now that midfielders should get a point for clean sheets.
+      #if !participated? || !self.position.defender?
+      #  # TODO: Maybe move this to the code where match stats are uploaded and transferred to PlayerMatchStat objects.
+      #  if !self.goals_conceded.nil? && self.goals_conceded >= 0
+      #    self.goals_conceded = 0
+      #  end
+      #end
   
       if participated?
         if self.red_card_time > 0
@@ -69,6 +79,13 @@ class PlayerMatchStat < ActiveRecord::Base
             self.points += 4;
           elsif self.goals_conceded >= 2
             self.points -= (self.goals_conceded - 1)
+          end
+        end
+
+        # Starting with the 2018-2019 season, midfielders will get 1 point for a clean sheet.
+        if !self.position.nil? && self.position.id == 4
+          if self.goals_conceded == 0
+            self.points += 1;
           end
         end
         

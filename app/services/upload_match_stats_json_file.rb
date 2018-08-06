@@ -159,9 +159,7 @@ class UploadMatchStatsJsonFile < UploadJsonFile
           player_match_stat.goals = player_match_stat_json.goals
           player_match_stat.goal_assists = player_match_stat_json.goal_assists
           player_match_stat.own_goals = player_match_stat_json.own_goals
-          if player_match_stat.position.defender?
-            player_match_stat.goals_conceded = player_match_stat_json.goals_conceded
-          end
+          player_match_stat.goals_conceded = player_match_stat_json.goals_conceded
           player_match_stat.yellow_card_time = player_match_stat_json.yellow_card_time
           player_match_stat.red_card_time = player_match_stat_json.red_card_time
           player_match_stat.man_of_the_match = player_match_stat_json.man_of_the_match
