@@ -24,9 +24,20 @@
              player_season_stat = player_season_info.player.season_stat(Season.where(status: 2).take)
             %>
           <li><div class="position-code"><%= player_season_info.position.code %></div>
-              <%= player_season_info.player.last_name %>
               <% if !player_season_stat.nil? %>
-              <span class="player-stats">(<%= player_season_stat.games_started %>/<%= player_season_stat.substitutions_on %>/<span class="<% if player_season_stat.points < 0 %>negative<% elsif player_season_stat.points > 0 %>positive<% end %>"><%= player_season_stat.points %>p)</span></span></li>
+              <%= player_season_info.player.last_name %>
+              <% else %>
+              <%= player_season_info.player.reversed_name(20) %>
+              <% end %>
+              <% if !player_season_stat.nil?
+                   clean_sheets = 0
+                   player_season_stat.player_match_stats.each do |player_match_stat|
+                     if player_match_stat.participated? && player_match_stat.match.goals_against(player_match_stat.team) == 0
+                       clean_sheets = clean_sheets + 1
+                     end
+                   end                
+              %>  
+              <span class="player-stats">(<%= player_season_stat.games_started %>+<%= player_season_stat.substitutions_on %>/<span class="<% if player_season_stat.points < 0 %>negative<% elsif player_season_stat.points > 0 %>positive<% end %>"><%= player_season_stat.points %><% if player_season_info.position_id == 4 %>+<%= clean_sheets %><% end %>p)</span></span></li>
               <% end %>
           <% end %>
         <% end %>
