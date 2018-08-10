@@ -32,10 +32,11 @@ class D11MatchDay < ActiveRecord::Base
   def match_dates
     match_dates = []
     d11_matches.each do |d11_match|
-      datetime = Match.by_d11_match(d11_match).pluck(:datetime).last      
+      datetime = Match.by_d11_match(d11_match).pluck(:datetime, :id).last.first # This looks a bit weird but since matches order by id we
+                                                                                # have to include id in select for some reason.      
       if !datetime.nil?
         # Datetime shouldn't be nil if the database is set up right but check just in case.
-        match_dates += [ Match.by_d11_match(d11_match).pluck(:datetime).last.to_date ]
+        match_dates += [ datetime.to_date ]
       end      
     end
     match_dates.uniq.sort

@@ -87,7 +87,7 @@ class D11Match < ActiveRecord::Base
 
   def D11Match.by_date(date)
     all.reject { |d11_match|
-      datetime = Match.by_d11_match(d11_match).pluck(:datetime).last
+      datetime = Match.by_d11_match(d11_match).pluck(:datetime, :id).last.first # See D11MatchDay.match_dates
       datetime.nil? || datetime.to_date != date
     }
   end
