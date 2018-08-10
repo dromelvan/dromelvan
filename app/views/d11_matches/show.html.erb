@@ -37,7 +37,7 @@
           </td>
           <td class="match-details-column detailed" colspan="3">
             <dl class="match-details detailed">
-              <% datetime = Match.by_d11_match(@d11_match).pluck(:datetime).first %>
+              <% datetime = Match.by_d11_match(@d11_match).pluck(:datetime, :id).first.first %>
               <% if !datetime.nil? %>
                 <dt>Date:</dt>
                 <dd><%= (datetime.to_date.postponed? ? "Postponed" : datetime.to_date) %></dd>
@@ -94,7 +94,7 @@
         <tr>
           <td class="match-details-column simple" colspan="2">
             <dl class="match-details simple">
-              <% datetime = Match.by_d11_match(@d11_match).pluck(:datetime).first %>
+              <% datetime = Match.by_d11_match(@d11_match).pluck(:datetime, :id).first.first %>
               <% if !datetime.nil? %>
                 <dt>Date:</dt>
                 <dd><%= (datetime.to_date.postponed? ? "Postponed" : datetime.to_date) %></dd>
