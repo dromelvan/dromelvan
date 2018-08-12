@@ -81,6 +81,10 @@ class UploadMatchStatsJsonFile < UploadJsonFile
     
     def update_data(match)
       data_updates = []
+      if match.elapsed == "N/A"
+        return data_updates
+      end
+      
       Match.transaction do
         player_match_stats = {}
         @match.player_match_stats.each do |player_match_stat|
@@ -199,7 +203,11 @@ class UploadMatchStatsJsonFile < UploadJsonFile
           Substitution.create(match: @match, player: player, player_in: player_in, team: team, time: time)          
         end
 
-        @match.status = :finished
+        if match.elapsed == "FT"
+          @match.status = :finished
+        else
+          @match.elapsed = match.elapsed
+        end
         @match.save
 
         PlayerSeasonStat.update_rankings(season)
