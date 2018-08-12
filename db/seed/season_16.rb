@@ -638,8 +638,8 @@ matches.each do | match_day_number, home_team_id, away_team_id, datetime, whosco
                        status: :pending,
                        datetime: datetime,
                        whoscored_id: whoscored_id)
-  TeamMatchSquadStat.create(team_id: home_team_id, match_id: match.id)
-  TeamMatchSquadStat.create(team_id: away_team_id, match_id: match.id)
+  TeamMatchSquadStat.create(team_id: home_team.id, match_id: match.id)
+  TeamMatchSquadStat.create(team_id: away_team.id, match_id: match.id)
 end
 
 puts("Updating match kickoff time timezones...")
