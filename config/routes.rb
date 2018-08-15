@@ -156,6 +156,9 @@ Rails.application.routes.draw do
         end
       end
       resources :matches, only: [:show, :update] do
+        member do
+          put 'update_match_stats'
+        end        
         collection do
           get 'by_date/:date', action: :by_date, as: 'by_date'
         end
