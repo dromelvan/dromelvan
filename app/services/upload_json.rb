@@ -1,8 +1,8 @@
-class UploadJsonFile
+class UploadJson
   
-  def upload(json_file)
+  def upload(json)
     upload_result = {}
-    upload_result[:validation_errors], data = validate_json(json_file.read)
+    upload_result[:validation_errors], data = validate_json(json)
     if !upload_result[:validation_errors].any?
       upload_result[:data_errors], upload_result[:missing_players] = validate_data(data)
       if !upload_result[:data_errors].any? && !upload_result[:missing_players].any?

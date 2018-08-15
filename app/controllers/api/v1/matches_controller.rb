@@ -1,5 +1,7 @@
 class Api::V1::MatchesController < Api::V1::BaseController
-  
+
+  before_action :authorize_administrator,  only: [:update, :update_match_stats]
+
   def show
     match = Match.find(params[:id])  
     render json: match
@@ -23,6 +25,15 @@ class Api::V1::MatchesController < Api::V1::BaseController
     match.save
     
     render json: match
+  end
+  
+  def update_match_stats    
+    match_stats = params[:match_stats]
+    begin
+      match = Match.find(params[:id])
+      upload_result = UploadMatchStatsJson.new(match, true).upload(match_stats)
+      render json: upload_result
+    end
   end
   
   private

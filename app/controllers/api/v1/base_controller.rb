@@ -2,13 +2,14 @@ class Api::V1::BaseController < ApplicationController
 
   protect_from_forgery with: :null_session
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ActionController::ParameterMissing, with: :not_found
 
   before_action :destroy_session
 
   def destroy_session
     request.session_options[:skip] = true
   end
-    
+        
   private
     def api_error(error_data)
       api_error = {}

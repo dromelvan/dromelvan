@@ -1,4 +1,4 @@
-class UploadMatchStatsJsonFile < UploadJsonFile
+class UploadMatchStatsJson < UploadJson
   def initialize(match, update_table_stats)
     @match = match
     @update_table_stats = update_table_stats
