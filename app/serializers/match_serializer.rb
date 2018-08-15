@@ -1,8 +1,18 @@
 class MatchSerializer < BaseSerializer
 
-  attributes :whoscored_id, :datetime, :match_day_number, :season_name
+  attributes :whoscored_id, :datetime, :status, :match_day_number, :season_name
 
   private
+    def status
+      if object.pending?
+        0
+      elsif object.active?
+        1
+      elsif object.finished?
+        2
+      end
+    end
+    
     def season_name
       object.match_day.premier_league.season.name
     end  
