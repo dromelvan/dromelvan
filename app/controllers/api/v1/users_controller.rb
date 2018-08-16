@@ -3,7 +3,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   
   def request_authentication_token
     user = User.where(email: request_authentication_token_params[:email]).first
-    puts user.nil?
+
     if !user.nil? && user.valid_password?(request_authentication_token_params[:password])
       user.update_authentication_token
       user.save
