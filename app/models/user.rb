@@ -46,7 +46,9 @@ class User < ActiveRecord::Base
   end
   
   def update_authentication_token
-    self.authentication_token = SecureRandom.base64(64)
+    kek = SecureRandom.base64(64)
+    puts kek
+    self.authentication_token = kek
   end
   
 end
