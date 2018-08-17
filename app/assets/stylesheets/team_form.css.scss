@@ -12,7 +12,8 @@ span.form-result {
   }
 }
 
-span.goal-column-increase {
+span.goal-column-increase,
+span.goal-column-decrease {
   color: white;
   padding-left: 6px;
   padding-right: 6px;
@@ -28,7 +29,7 @@ span.form-result.draw {
   background-color: $draw-color;
 }
 
-span.form-result.loss {
+span.form-result.loss, span.goal-column-decrease {
   background-color: $loss-color;
 }
 

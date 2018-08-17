@@ -20,6 +20,10 @@ class D11Match < ActiveRecord::Base
   validates :away_team_goals, numericality: { greater_than_or_equal_to: 0 }
   validates :home_team_points, presence: true
   validates :away_team_points, presence: true
+  validates :previous_home_team_goals, numericality: { greater_than_or_equal_to: 0 }
+  validates :previous_away_team_goals, numericality: { greater_than_or_equal_to: 0 }
+  validates :previous_home_team_points, presence: true
+  validates :previous_away_team_points, presence: true  
   validates :elapsed, presence: true
   validates :status, presence: true
 
@@ -98,6 +102,10 @@ class D11Match < ActiveRecord::Base
       self.away_team_goals ||= 0
       self.home_team_points ||= 0
       self.away_team_points ||= 0
+      self.previous_home_team_goals ||= 0
+      self.previous_away_team_goals ||= 0
+      self.previous_home_team_points ||= 0
+      self.previous_away_team_points ||= 0      
       self.elapsed ||= "N/A"
       self.status ||= 0
     end
@@ -127,6 +135,9 @@ class D11Match < ActiveRecord::Base
     end
     
     def update_team_points
+      self.previous_home_team_points = self.home_team_points
+      self.previous_away_team_points = self.away_team_points
+      
       d11_team_match_squad_stat = d11_team_match_squad_stats.where(d11_team: home_d11_team).take
       if !d11_team_match_squad_stat.nil?
         self.home_team_points = d11_team_match_squad_stat.points
@@ -138,6 +149,9 @@ class D11Match < ActiveRecord::Base
     end
     
     def update_goals
+      self.previous_home_team_goals = self.home_team_goals
+      self.previous_away_team_goals = self.away_team_goals
+
       update_team_points
       
       self.home_team_points ||= 0

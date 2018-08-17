@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180817105939) do
+ActiveRecord::Schema.define(version: 20180817165956) do
 
   create_table "api_users", force: true do |t|
     t.string   "email"
@@ -88,6 +88,10 @@ ActiveRecord::Schema.define(version: 20180817105939) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "elapsed"
+    t.integer  "previous_home_team_goals"
+    t.integer  "previous_away_team_goals"
+    t.integer  "previous_home_team_points"
+    t.integer  "previous_away_team_points"
   end
 
   create_table "d11_team_career_squad_stats", force: true do |t|
