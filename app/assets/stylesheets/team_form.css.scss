@@ -12,7 +12,15 @@ span.form-result {
   }
 }
 
-span.form-result.win {
+span.goal-column-increase {
+  color: white;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+span.form-result.win, span.goal-column-increase {
   background-color: $win-color;
 }
 

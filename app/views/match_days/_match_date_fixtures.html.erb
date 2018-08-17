@@ -61,10 +61,20 @@
             </div>
           </td>
           <td class="result-simple-column number-column">
-            <% if !match.pending? %>
+            <% if !match.pending?
+                 home_team_goals = "#{match.home_team_goals}"
+                 if match.previous_home_team_goals < match.home_team_goals
+                   home_team_goals = "<span class=goal-column-increase>#{home_team_goals}</span>"
+                 end
+              
+                 away_team_goals = "#{match.away_team_goals}"
+                 if match.previous_away_team_goals < match.away_team_goals
+                   away_team_goals = "<span class=goal-column-increase>#{away_team_goals}</span>"
+                 end                 
+            %>
               <ol>
-                <li><%= link_to match.home_team_goals, match %></li>
-                <li><%= link_to match.away_team_goals, match %></li>
+                <li><%= link_to "#{home_team_goals}".html_safe, match %></li>
+                <li><%= link_to "#{away_team_goals}".html_safe, match %></li>
               </ol>
             <% end %>
           </td>

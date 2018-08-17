@@ -31,6 +31,8 @@ class Match < ActiveRecord::Base
   validates :stadium, presence: true
   validates :home_team_goals, numericality: { greater_than_or_equal_to: 0 }
   validates :away_team_goals, numericality: { greater_than_or_equal_to: 0 }
+  validates :previous_home_team_goals, numericality: { greater_than_or_equal_to: 0 }
+  validates :previous_away_team_goals, numericality: { greater_than_or_equal_to: 0 }  
   validates :datetime, presence: true
   validates :elapsed, presence: true
   validates :status, presence: true
@@ -149,6 +151,8 @@ class Match < ActiveRecord::Base
       self.elapsed ||= "N/A"
       self.home_team_goals ||= 0
       self.away_team_goals ||= 0
+      self.previous_home_team_goals ||= 0
+      self.previous_away_team_goals ||= 0      
     end
     
     def update_default_properties
@@ -162,6 +166,8 @@ class Match < ActiveRecord::Base
     end
     
     def update_goals
+      self.previous_home_team_goals = self.home_team_goals
+      self.previous_away_team_goals = self.away_team_goals
       self.home_team_goals = goals.where(team: home_team).count
       self.away_team_goals = goals.where(team: away_team).count
     end

@@ -19,9 +19,13 @@
         <tr>
           <td class="team-name-column home-team" colspan="2"><%= render @match.home_team, club_crest: :hide %></td>
           <% if !@match.pending? %>
-            <td class="goal-column home-team"><%= @match.home_team_goals %></td>
+            <td class="goal-column home-team">
+              <span<%= (@match.home_team_goals > @match.previous_home_team_goals ? ' class=goal-column-increase' : '') %>><%= @match.home_team_goals %></span>
+            </td>                       
             <td class="goal-column separator">-</td>
-            <td class="goal-column away-team"><%= @match.away_team_goals %></td>            
+            <td class="goal-column away-team">
+              <span<%= (@match.away_team_goals > @match.previous_away_team_goals ? ' class=goal-column-increase' : '') %>><%= @match.away_team_goals %></span>
+            </td>            
           <% else %>
             <td colspan="3">&nbsp;</td>
           <% end %>
@@ -69,7 +73,9 @@
       <tbody>
         <tr>
           <td class="team-name-column home-team"><%= render 'teams/club_crest', team: @match.home_team, style: :icon %> <%= render @match.home_team %></td>
-          <td class="goal-column"><%= (@match.pending? ? '&nbsp;'.html_safe : @match.home_team_goals) %></td>
+            <td class="goal-column home-team">
+              <span<%= (@match.home_team_goals > @match.previous_home_team_goals ? ' class=goal-column-increase' : '') %>><%= @match.home_team_goals %></span>
+            </td>            
         </tr>
         <tr>
           <td class="match-events home-team" colspan="2">
@@ -78,7 +84,9 @@
         </tr>        
         <tr>
           <td class="team-name-column away-team"><%= render 'teams/club_crest', team: @match.away_team, style: :icon %> <%= render @match.away_team %></td>
-          <td class="goal-column"><%= (@match.pending? ? '&nbsp;'.html_safe : @match.away_team_goals) %></td>
+            <td class="goal-column away-team">
+              <span<%= (@match.away_team_goals > @match.previous_away_team_goals ? ' class=goal-column-increase' : '') %>><%= @match.away_team_goals %></span>
+            </td>            
         </tr>
         <tr>
           <td class="match-events away-team" colspan="2">
