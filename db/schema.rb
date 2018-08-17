@@ -11,7 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731075435) do
+ActiveRecord::Schema.define(version: 20170104212216) do
+
+  create_table "api_users", force: true do |t|
+    t.string   "email"
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.string   "name"
+    t.string   "nickname"
+    t.string   "image"
+    t.string   "provider"
+    t.string   "uid",                    default: "", null: false
+    t.text     "tokens"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "api_users", ["email"], name: "index_api_users_on_email"
+  add_index "api_users", ["reset_password_token"], name: "index_api_users_on_reset_password_token", unique: true
+  add_index "api_users", ["uid"], name: "index_api_users_on_uid", unique: true
 
   create_table "cards", force: true do |t|
     t.integer  "match_id"
@@ -40,11 +69,11 @@ ActiveRecord::Schema.define(version: 20160731075435) do
 
   create_table "d11_match_days", force: true do |t|
     t.integer  "d11_league_id"
-    t.integer  "match_day_id"
     t.date     "date"
     t.integer  "match_day_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "match_day_id"
   end
 
   create_table "d11_matches", force: true do |t|
@@ -63,7 +92,6 @@ ActiveRecord::Schema.define(version: 20160731075435) do
 
   create_table "d11_team_career_squad_stats", force: true do |t|
     t.integer  "d11_team_id"
-    t.integer  "team_goals"
     t.integer  "goals"
     t.integer  "goal_assists"
     t.integer  "own_goals"
@@ -83,6 +111,7 @@ ActiveRecord::Schema.define(version: 20160731075435) do
     t.integer  "minutes_played"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "team_goals"
     t.integer  "points_per_appearance"
   end
 
@@ -90,7 +119,6 @@ ActiveRecord::Schema.define(version: 20160731075435) do
     t.integer  "d11_team_id"
     t.integer  "d11_match_id"
     t.integer  "team_goals"
-    t.integer  "team_points"
     t.integer  "goals"
     t.integer  "goal_assists"
     t.integer  "own_goals"
@@ -125,7 +153,6 @@ ActiveRecord::Schema.define(version: 20160731075435) do
     t.integer  "d11_team_id"
     t.integer  "season_id"
     t.integer  "team_goals"
-    t.integer  "team_points"
     t.integer  "goals"
     t.integer  "goal_assists"
     t.integer  "own_goals"
@@ -190,13 +217,13 @@ ActiveRecord::Schema.define(version: 20160731075435) do
     t.integer  "co_owner_id"
     t.string   "name"
     t.string   "code"
-    t.boolean  "dummy"
     t.string   "club_crest_file_name"
     t.string   "club_crest_content_type"
     t.integer  "club_crest_file_size"
     t.datetime "club_crest_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "dummy"
   end
 
   create_table "goals", force: true do |t|
@@ -443,7 +470,6 @@ ActiveRecord::Schema.define(version: 20160731075435) do
   create_table "team_match_squad_stats", force: true do |t|
     t.integer  "team_id"
     t.integer  "match_id"
-    t.integer  "team_points"
     t.integer  "goals"
     t.integer  "goal_assists"
     t.integer  "own_goals"
@@ -477,7 +503,6 @@ ActiveRecord::Schema.define(version: 20160731075435) do
   create_table "team_season_squad_stats", force: true do |t|
     t.integer  "team_id"
     t.integer  "season_id"
-    t.integer  "team_points"
     t.integer  "goals"
     t.integer  "goal_assists"
     t.integer  "own_goals"
@@ -546,14 +571,14 @@ ActiveRecord::Schema.define(version: 20160731075435) do
     t.string   "motto"
     t.integer  "stadium_id"
     t.integer  "whoscored_id"
-    t.string   "colour"
-    t.boolean  "dummy"
     t.string   "club_crest_file_name"
     t.string   "club_crest_content_type"
     t.integer  "club_crest_file_size"
     t.datetime "club_crest_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "colour"
+    t.boolean  "dummy"
   end
 
   create_table "transfer_bids", force: true do |t|
@@ -644,6 +669,7 @@ ActiveRecord::Schema.define(version: 20160731075435) do
     t.string   "name"
     t.string   "provider"
     t.string   "uid"
+    t.string   "authentication_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
