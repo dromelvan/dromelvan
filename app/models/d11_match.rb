@@ -96,6 +96,13 @@ class D11Match < ActiveRecord::Base
     }
   end
   
+  def update_previous_points_and_goals
+    self.previous_home_team_goals = self.home_team_goals
+    self.previous_away_team_goals = self.away_team_goals
+    self.previous_home_team_points = self.home_team_points
+    self.previous_away_team_points = self.away_team_points      
+  end
+  
   private
     def init
       self.home_team_goals ||= 0
@@ -134,10 +141,7 @@ class D11Match < ActiveRecord::Base
       end
     end
     
-    def update_team_points
-      self.previous_home_team_points = self.home_team_points
-      self.previous_away_team_points = self.away_team_points
-      
+    def update_team_points      
       d11_team_match_squad_stat = d11_team_match_squad_stats.where(d11_team: home_d11_team).take
       if !d11_team_match_squad_stat.nil?
         self.home_team_points = d11_team_match_squad_stat.points
@@ -149,9 +153,6 @@ class D11Match < ActiveRecord::Base
     end
     
     def update_goals
-      self.previous_home_team_goals = self.home_team_goals
-      self.previous_away_team_goals = self.away_team_goals
-
       update_team_points
       
       self.home_team_points ||= 0
@@ -169,7 +170,7 @@ class D11Match < ActiveRecord::Base
         self.away_team_goals = 0
       end
     end
-    
+        
     def update_elapsed
       if pending?
         self.elapsed = "N/A"

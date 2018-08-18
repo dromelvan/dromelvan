@@ -1,7 +1,7 @@
 class UploadMatchStatsJson < UploadJson
-  def initialize(match, update_table_stats)
+  def initialize(match, update_previous_points_and_goals)
     @match = match
-    @update_table_stats = update_table_stats
+    @update_previous_points_and_goals = update_previous_points_and_goals
   end
 
   private
@@ -217,17 +217,18 @@ class UploadMatchStatsJson < UploadJson
           team_match_squad_stat.save
         end
         
-        if @update_table_stats
-          TeamTableStat.update_stats_from(@match)
-          TeamTableStat.update_rankings_from(@match.match_day)
-        end
+        TeamTableStat.update_stats_from(@match)
+        TeamTableStat.update_rankings_from(@match.match_day)
         
         @match.match_day.d11_match_day.d11_matches.each do |d11_match|
           d11_match.d11_team_match_squad_stats.each do |d11_team_match_squad_stat|
             d11_team_match_squad_stat.save
           end
+          if @update_previous_points_and_goals
+            d11_match.update_previous_points_and_goals
+          end
           d11_match.save
-          if @update_table_stats && d11_match.finished?
+          if d11_match.finished?
             D11TeamTableStat.update_stats_from(d11_match)
             D11TeamTableStat.update_rankings_from(d11_match.d11_match_day)
             data_updates.concat([ "Finished D11 match #{d11_match.name}." ])

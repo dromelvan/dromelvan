@@ -29,9 +29,10 @@ class Api::V1::MatchesController < Api::V1::BaseController
   
   def update_match_stats    
     match_stats = params[:match_stats]
+    update_previous_points_and_goals = params[:update_previous_points_and_goals] == "true"
     begin
       match = Match.find(params[:id])
-      upload_result = UploadMatchStatsJson.new(match, true).upload(match_stats)
+      upload_result = UploadMatchStatsJson.new(match, update_previous_points_and_goals).upload(match_stats)
       render json: upload_result
     end
   end
