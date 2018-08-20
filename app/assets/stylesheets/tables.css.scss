@@ -501,7 +501,60 @@ table.printable-player-list {
 	}
     }    
 }
+
+table {
+    span.live-score-update {
+	span.score-difference-indicator-up {
+	    color: $win-color;
+	}
+	span.score-difference-indicator-down {
+	    color: $loss-color;
+	}
+	span.goal-difference {
+	    font-weight: bold;
+	}
+	font-size: 14px;
+    }
+    td.home-team-column {
+	span.live-score-update {
+	    float: right;
+	}
+    }
+    td.away-team-column {
+	span.live-score-update {
+	    float: left;
+	}
+    }    
+}
+
+table.detailed {
+    td.home-team {
+	span.live-score-update {
+	    float: right;
+	}
+    }
+    
+    td.away-team {
+	span.live-score-update {
+	    float: left;
+	}
+    }
+    
+    td.home-team, td.away-team {
+	span.live-score-update {
+	    padding-top: 8px;
+	}
+    }    
+}
+
 /* Tablet screen overrides -------------------------------------------------- */
+@media only screen and (min-width: $screen-desktop-min) {
+    span.live-score-update {
+	span.short {
+	    display: none;
+	}
+    }    
+}
 
 @media only screen and (min-width: $screen-tablet-landscape-min) and (max-width: $screen-tablet-landscape-max) {
     table.league-table.detailed {
@@ -527,9 +580,23 @@ table.printable-player-list {
 		display: none;
 	    }
 	}
-    }    
+    }
+    
+    span.live-score-update {
+	span.long {
+	    display: none;
+	}
+    }
 }    
 
+@media only screen and (min-width: 768px) and (max-width: $screen-tablet-portrait-max) {
+    span.live-score-update {
+	span.short {
+	    display: none;
+	}
+    }    
+}
+    
 @media only screen and (max-width: $screen-tablet-portrait-max) {
     table.league-table.detailed {
 	thead {
@@ -584,6 +651,11 @@ table.printable-player-list {
 		}	    
 	    }
 	}
+	span.live-score-update {
+	    span.long {
+		display: none;
+	    }
+	}	
     }
 }
 

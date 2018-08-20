@@ -11,4 +11,10 @@ div.d11-matches.show {
             @extend .hidden-xs;
         }        
     }
+    
+    table.match-header.simple {
+        td.goal-column {
+            text-align: right;
+        }
+    }
 }

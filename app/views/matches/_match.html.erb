@@ -1,15 +1,1 @@
-<% if !match.pending? then
-     home_team_goals = "#{match.home_team_goals}"
-     if match.previous_home_team_goals < match.home_team_goals
-       home_team_goals = "<span class=goal-column-increase>#{home_team_goals}</span>"
-     end
-  
-     away_team_goals = "#{match.away_team_goals}"
-     if match.previous_away_team_goals < match.away_team_goals
-       away_team_goals = "<span class=goal-column-increase>#{away_team_goals}</span>"
-     end     
-%>
-  <%= link_to "#{home_team_goals} - #{away_team_goals}".html_safe, match, class: "model-link" %>
-<% else %>
-  <%= link_to "vs", match, class: "model-link" %>
-<% end %>
+<% if !match.pending? then %><%= link_to "#{match.home_team_goals} - #{match.away_team_goals}".html_safe, match, class: "model-link" %><% else %><%= link_to "vs", match, class: "model-link" %><% end %>

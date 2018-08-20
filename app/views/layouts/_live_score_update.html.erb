@@ -1,0 +1,30 @@
+<%
+  goal_difference ||= 0
+  point_difference ||= 0
+  team ||= :away
+  
+  if goal_difference + point_difference != 0 
+%>
+<span class="live-score-update">
+  <% if team == :away %>
+    <% if goal_difference + point_difference > 0 %>
+    <span class="glyphicon glyphicon-arrow-up score-difference-indicator-up"></span>
+    <% else %>
+    <span class="glyphicon glyphicon-arrow-down score-difference-indicator-down"></span>
+    <% end %>
+  <% end %>
+  <% if goal_difference != 0 %>
+  <span class="goal-difference"><% if goal_difference > 0 %>+<% end %><span class="long"><%= pluralize(goal_difference, 'Goal') %></span><span class="short"><%= goal_difference %>G</span></span>
+  <% end %>
+  <% if point_difference != 0 %>
+  <span class="point-difference"><% if point_difference > 0 %>+<% end %><span class="long"><%= pluralize(point_difference, 'Point') %></span><span class="short"><%= point_difference %>P</span></span>
+  <% end %>
+  <% if team == :home %>
+    <% if goal_difference + point_difference > 0 %>
+    <span class="glyphicon glyphicon-arrow-up score-difference-indicator-up"></span>
+    <% else %>
+    <span class="glyphicon glyphicon-arrow-down score-difference-indicator-down"></span>
+    <% end %>
+  <% end %>  
+</span>
+<% end %>

@@ -33,6 +33,12 @@
           </td>
           <td class="team-column home-team-column">
             <%= render match.home_team %>
+            <% if !match.pending? %>            
+              <%
+                goal_difference = match.home_team_goals - match.previous_home_team_goals
+              %>
+              <%= render 'layouts/live_score_update', team: :home, goal_difference: goal_difference %>
+            <% end %>
             <div class="match-details match-date-details-<%= match.datetime.to_date.to_formatted_s(:number) %> match-id-details-<%= match.id %> collapse out">                          
               <%= render 'matches/match_team_details', match: match, team: match.home_team %>
             </div>              
@@ -41,6 +47,12 @@
             <%= render match %>
           </td>
           <td class="team-column away-team-column">
+            <% if !match.pending? %>            
+              <%
+                goal_difference = match.away_team_goals - match.previous_away_team_goals
+              %>
+              <%= render 'layouts/live_score_update', team: :away, goal_difference: goal_difference %>
+            <% end %>            
             <%= render match.away_team %>
             <div class="match-details match-date-details-<%= match.datetime.to_date.to_formatted_s(:number) %> match-id-details-<%= match.id %> collapse out">                          
               <%= render 'matches/match_team_details', match: match, team: match.away_team %>
@@ -61,20 +73,10 @@
             </div>
           </td>
           <td class="result-simple-column number-column">
-            <% if !match.pending?
-                 home_team_goals = "#{match.home_team_goals}"
-                 if match.previous_home_team_goals < match.home_team_goals
-                   home_team_goals = "<span class=goal-column-increase>#{home_team_goals}</span>"
-                 end
-              
-                 away_team_goals = "#{match.away_team_goals}"
-                 if match.previous_away_team_goals < match.away_team_goals
-                   away_team_goals = "<span class=goal-column-increase>#{away_team_goals}</span>"
-                 end                 
-            %>
+            <% if !match.pending? %>
               <ol>
-                <li><%= link_to "#{home_team_goals}".html_safe, match %></li>
-                <li><%= link_to "#{away_team_goals}".html_safe, match %></li>
+                <li><%= render 'layouts/live_score_update', goal_difference: match.home_team_goals - match.previous_home_team_goals %><%= link_to match.home_team_goals, match %></li>
+                <li><%= render 'layouts/live_score_update', goal_difference: match.away_team_goals - match.previous_away_team_goals %><%= link_to match.away_team_goals, match %></li>
               </ol>
             <% end %>
           </td>

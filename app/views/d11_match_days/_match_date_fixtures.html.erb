@@ -29,6 +29,13 @@
           </td>
           <td class="team-column home-team-column">
             <%= image_tag(d11_match.home_d11_team.club_crest.url(:icon), alt: d11_match.home_d11_team.name, title: d11_match.home_d11_team.name, class: "club-crest") %><%= render d11_match.home_d11_team %>
+            <% if !d11_match.pending? %>
+              <%
+                goal_difference = d11_match.home_team_goals - d11_match.previous_home_team_goals
+                point_difference = d11_match.home_team_points - d11_match.previous_home_team_points
+              %>
+              <%= render 'layouts/live_score_update', team: :home, goal_difference: goal_difference, point_difference: point_difference %>
+            <% end %>              
             <div class="match-details match-date-details-<%= match_date.to_formatted_s(:number) %> match-id-details-<%= d11_match.id %> collapse out">                          
               <%= render 'd11_matches/d11_match_d11_team_details', d11_match: d11_match, d11_team: d11_match.home_d11_team %>
             </div>                            
@@ -37,25 +44,18 @@
             <%= render d11_match %>
           </td>
           <td class="result-points-column">
-            <% if !d11_match.pending? then
-               home_team_points = "#{d11_match.home_team_points}"
-               if d11_match.previous_home_team_points < d11_match.home_team_points
-                 home_team_points = "<span class=goal-column-increase>#{home_team_points}</span>"
-               elsif d11_match.previous_home_team_points > d11_match.home_team_points
-                 home_team_points = "<span class=goal-column-decrease>#{home_team_points}</span>"
-               end     
-            
-               away_team_points = "#{d11_match.away_team_points}"
-               if d11_match.previous_away_team_points < d11_match.away_team_points
-                 away_team_points = "<span class=goal-column-increase>#{away_team_points}</span>"
-               elsif d11_match.previous_away_team_points > d11_match.away_team_points
-                 away_team_points = "<span class=goal-column-decrease>#{away_team_points}</span>"
-               end     
-            %>
-              <%= link_to "#{home_team_points} - #{away_team_points}".html_safe, d11_match, class: "model-link" %>
+            <% if !d11_match.pending? %>
+              <%= link_to "#{d11_match.home_team_points} - #{d11_match.away_team_points}", d11_match, class: "model-link" %>
             <% end %>
           </td>            
           <td class="team-column away-team-column">
+            <% if !d11_match.pending? %>
+              <%
+                goal_difference = d11_match.away_team_goals - d11_match.previous_away_team_goals
+                point_difference = d11_match.away_team_points - d11_match.previous_away_team_points
+              %>
+              <%= render 'layouts/live_score_update', team: :away, goal_difference: goal_difference, point_difference: point_difference %>
+            <% end %>
             <%= image_tag(d11_match.away_d11_team.club_crest.url(:icon), alt: d11_match.away_d11_team.name, title: d11_match.away_d11_team.name, class: "club-crest") %><%= render d11_match.away_d11_team %>
             <div class="match-details match-date-details-<%= match_date.to_formatted_s(:number) %> match-id-details-<%= d11_match.id %> collapse out">                          
               <%= render 'd11_matches/d11_match_d11_team_details', d11_match: d11_match, d11_team: d11_match.away_d11_team %>
@@ -76,38 +76,10 @@
             </div>
           </td>
           <td class="result-simple-column number-column">
-            <% if !d11_match.pending?
-                 home_team_goals = "#{d11_match.home_team_goals}"
-                 if d11_match.previous_home_team_goals < d11_match.home_team_goals
-                   home_team_goals = "<span class=goal-column-increase>#{home_team_goals}</span>"
-                 elsif d11_match.previous_home_team_goals > d11_match.home_team_goals
-                   home_team_goals = "<span class=goal-column-decrease>#{home_team_goals}</span>"
-                 end     
-            
-                 home_team_points = "#{d11_match.home_team_points}"
-                 if d11_match.previous_home_team_points < d11_match.home_team_points
-                   home_team_points = "&nbsp;<span class=goal-column-increase>#{home_team_points}</span>&nbsp;"
-                 elsif d11_match.previous_home_team_points > d11_match.home_team_points
-                   home_team_points = "&nbsp;<span class=goal-column-decrease>#{home_team_points}</span>&nbsp;"
-                 end     
-            
-                 away_team_goals = "#{d11_match.away_team_goals}"
-                 if d11_match.previous_away_team_goals < d11_match.away_team_goals
-                   away_team_goals = "<span class=goal-column-increase>#{away_team_goals}</span>"
-                 elsif d11_match.previous_away_team_goals > d11_match.away_team_goals
-                   away_team_goals = "<span class=goal-column-decrease>#{away_team_goals}</span>"
-                 end     
-            
-                 away_team_points = "#{d11_match.away_team_points}"
-                 if d11_match.previous_away_team_points < d11_match.away_team_points
-                   away_team_points = "&nbsp;<span class=goal-column-increase>#{away_team_points}</span>&nbsp;"
-                 elsif d11_match.previous_away_team_points > d11_match.away_team_points
-                   away_team_points = "&nbsp;<span class=goal-column-decrease>#{away_team_points}</span>&nbsp;"
-                 end     
-            %>
+            <% if !d11_match.pending? %>
               <ol>
-                <li><%= link_to "#{home_team_goals} (#{home_team_points})".html_safe, d11_match %></li>
-                <li><%= link_to "#{away_team_goals} (#{away_team_points})".html_safe, d11_match %></li>
+                <li><%= render 'layouts/live_score_update', goal_difference: d11_match.home_team_goals - d11_match.previous_home_team_goals, point_difference: d11_match.home_team_points - d11_match.previous_home_team_points %><%= link_to "#{d11_match.home_team_goals} (#{d11_match.home_team_points})".html_safe, d11_match %></li>
+                <li><%= render 'layouts/live_score_update', goal_difference: d11_match.away_team_goals - d11_match.previous_away_team_goals, point_difference: d11_match.away_team_points - d11_match.previous_away_team_points %><%= link_to "#{d11_match.away_team_goals} (#{d11_match.away_team_points})".html_safe, d11_match %></li>
               </ol>
             <% end %>
           </td>
