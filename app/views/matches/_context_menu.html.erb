@@ -4,9 +4,7 @@
     <li><%= link_to match.match_day.name, match.match_day %></li>
     <% if administrator_signed_in? %>
     <li class="dropdown-header">Statistics</li>
-    <% if match.player_match_stats.any? %>
     <li><%= link_to "Update Match Stats", edit_match_stats_match_path(match), data: { toggle: "modal", target: "#d11-modal" } %></li>
-    <% end %>
     <li class="dropdown-header">Date & Time</li>
     <li>
         <%= form_for(match) do |f| %>

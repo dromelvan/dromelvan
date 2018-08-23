@@ -14,12 +14,16 @@ class MatchDaysController < ApplicationController
   end
 
   def activate
-    match_day = MatchDay.find(status_enum_params[:id])
-    update_status(match_day, :active)
-    
-    PlayerSeasonInfo.where(season: match_day.premier_league.season).each do |player_season_info|
-      match = match_day.matches.by_team(player_season_info.team).take
-      PlayerMatchStat.create(player: player_season_info.player, match: match, team: player_season_info.team, d11_team: player_season_info.d11_team, position: player_season_info.position, played_position: player_season_info.position.code)
+    if match_day.pending?
+      match_day = MatchDay.find(status_enum_params[:id])
+      update_status(match_day, :active)
+      
+      PlayerSeasonInfo.where(season: match_day.premier_league.season).each do |player_season_info|
+        match = match_day.matches.by_team(player_season_info.team).take
+        PlayerMatchStat.create(player: player_season_info.player, match: match, team: player_season_info.team, d11_team: player_season_info.d11_team, position: player_season_info.position, played_position: player_season_info.position.code)
+      end
+    else
+      not_found
     end
   end
 

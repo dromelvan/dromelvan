@@ -86,6 +86,17 @@ class UploadMatchStatsJson < UploadJson
       end
       
       Match.transaction do
+        match_day = @match.match_day
+        if match_day.pending?
+          match_day.status = :active
+          match_day.save
+          
+          PlayerSeasonInfo.where(season: match_day.premier_league.season).each do |player_season_info|
+            activated_match = match_day.matches.by_team(player_season_info.team).take
+            PlayerMatchStat.create(player: player_season_info.player, match: activated_match, team: player_season_info.team, d11_team: player_season_info.d11_team, position: player_season_info.position, played_position: player_season_info.position.code)
+          end
+        end
+        
         player_match_stats = {}
         @match.player_match_stats.each do |player_match_stat|
           player_match_stat.reset

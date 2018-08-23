@@ -180,6 +180,9 @@ Rails.application.routes.draw do
         end
       end            
       resources :match_days, only: [:show] do
+        member do
+          put 'activate'
+        end                
         collection do
           get 'current'
           get 'upcoming'
