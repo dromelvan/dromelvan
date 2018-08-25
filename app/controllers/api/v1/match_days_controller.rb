@@ -11,6 +11,11 @@ class Api::V1::MatchDaysController < Api::V1::BaseController
     match_day = PremierLeague.current.current_match_day
     
     if !match_day.nil?
+      # Do a touch here so the scheduled jobs also make the navbar update its cache.
+      # This should probably be done some other way.
+      PremierLeague.current.touch
+      D11League.current.touch
+      
       render json: match_day
     else
       not_found
