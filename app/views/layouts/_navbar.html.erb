@@ -26,7 +26,7 @@
           <%= render 'layouts/dropdown_toggle', text: "D11" %>
           <ul class="dropdown-menu" id="d11-menu">
             <% if !D11League.current.nil? && !D11League.current.current_d11_match_day.nil? %>
-            <li><%= link_to "Current Match Day", main_app.d11_match_day_path(D11League.current.current_d11_match_day) %></li>
+            <li><%= link_to "Current Match Day", main_app.current_d11_match_days_path %></li>
             <% end %>
             <% if !D11League.current.nil? %>
             <li><%= link_to "League Table", main_app.d11_league_path(D11League.current) %></li>
@@ -44,7 +44,7 @@
           <%= render 'layouts/dropdown_toggle', text: "Premier League" %>
           <ul class="dropdown-menu" id="premier-league-menu">
             <% if !PremierLeague.current.nil? && !PremierLeague.current.current_match_day.nil? %>
-            <li><%= link_to "Current Match Day", main_app.match_day_path(PremierLeague.current.current_match_day) %></li>
+            <li><%= link_to "Current Match Day", main_app.current_match_days_path %></li>
             <% end %>
             <% if !PremierLeague.current.nil? %>
             <li><%= link_to "League Table", main_app.premier_league_path(PremierLeague.current) %></li>

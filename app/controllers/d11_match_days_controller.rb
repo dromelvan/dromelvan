@@ -26,6 +26,20 @@ class D11MatchDaysController < ApplicationController
     redirect_to @d11_match_day
   end
 
+  def current
+    d11_league = D11League.current
+    if !d11_league.nil?
+      d11_match_day = d11_league.current_d11_match_day
+      if !d11_match_day.nil?
+        redirect_to d11_match_day
+      else
+        not_found
+      end
+    else
+      not_found
+    end
+  end
+
   private
     def update_params
       params.require(:d11_match_day).permit(:date)

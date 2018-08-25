@@ -99,6 +99,12 @@ Rails.application.routes.draw do
     end    
   end
   
+  concern :current do
+    collection do
+      get :current
+    end    
+  end
+  
   resources :seasons, only: [:index, :show], concerns: [:select]
   resources :teams, only: [:show], concerns: [:select_season, :select, :fixtures]
   resources :players, only: [:show, :new, :create], concerns: [:select_season] do
@@ -116,7 +122,7 @@ Rails.application.routes.draw do
       get 'printable_player_list', path: 'printable-player-list'
     end
   end
-  resources :match_days, only: [:show, :update], concerns: [:select, :status_enum], path: 'match-days' do
+  resources :match_days, only: [:show, :update], concerns: [:select, :status_enum, :current], path: 'match-days' do
     member do
       get 'update_stats'
     end        
@@ -133,7 +139,7 @@ Rails.application.routes.draw do
     end
   end
   resources :d11_leagues, only: [:show], concerns: [:select, :table, :d11_teams], path: 'd11-leagues'
-  resources :d11_match_days, only: [:show, :update], concerns: [:select], path: 'd11-match-days'
+  resources :d11_match_days, only: [:show, :update], concerns: [:select, :current], path: 'd11-match-days'
   resources :d11_matches, only: [:show], concerns: [:select], path: 'd11-matches'
   resources :d11_teams, only: [:show], concerns: [:select_season, :select, :fixtures], path: 'd11-teams'
   resources :transfer_windows, only: [:show, :new, :create], concerns: [:select], path: 'transfer-windows'

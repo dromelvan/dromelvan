@@ -4,6 +4,20 @@ class MatchDaysController < ApplicationController
   # TODO: Figure out why specs fail if this is put in StatusEnum 
   before_action :authorize_administrator,  only: [:pend, :activate, :finish, :update, :update_stats]
 
+  def current
+    premier_league = PremierLeague.current
+    if !premier_league.nil?
+      match_day = premier_league.current_match_day
+      if !match_day.nil?
+        redirect_to match_day
+      else
+        not_found
+      end
+    else
+      not_found
+    end
+  end
+  
   def pend
     match_day = MatchDay.find(status_enum_params[:id])
     update_status(match_day, :pending)
