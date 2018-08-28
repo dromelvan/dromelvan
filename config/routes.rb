@@ -188,6 +188,7 @@ Rails.application.routes.draw do
       resources :match_days, only: [:show] do
         member do
           put 'activate'
+          put 'finish'
         end                
         collection do
           get 'current'

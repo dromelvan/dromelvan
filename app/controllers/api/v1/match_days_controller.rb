@@ -1,6 +1,6 @@
 class Api::V1::MatchDaysController < Api::V1::BaseController
 
-  before_action :authorize_administrator,  only: [:activate]
+  before_action :authorize_administrator,  only: [:activate, :finish]
 
   def show
     match = MatchDay.find(params[:id])  
@@ -27,7 +27,7 @@ class Api::V1::MatchDaysController < Api::V1::BaseController
       not_found
     end
   end
-
+  
   def by_season
     season = Season.find(params[:season_id])
     match_days = season.premier_league.match_days
@@ -49,6 +49,27 @@ class Api::V1::MatchDaysController < Api::V1::BaseController
     else
       not_found
     end    
+  end
+
+  def finish
+    match_day = MatchDay.find(params[:id])
+    if match_day.active?
+      match_day.status = :finished
+      match_day.save
+      
+      match_day.matches.each do |match|
+        match.touch
+      end
+      
+      match_day.d11_match_day.d11_matches.each do |d11_match|
+        d11_match.update_previous_points_and_goals
+        d11_match.save
+      end
+      
+      render json: match_day.reload
+    else
+      not_found
+    end        
   end
   
 end
