@@ -14,7 +14,7 @@
     <% end %>                                          
   </td>
   <td class="time-elapsed-column">
-    <%= match.elapsed %>
+    <%= match.elapsed %><% if match.full_time? %><span class="update_pending"> *</span><% end %>
   </td>
   <td class="team-column home-team-column">
     <%= render match.home_team %>

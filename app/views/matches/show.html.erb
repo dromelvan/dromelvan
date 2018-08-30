@@ -56,7 +56,7 @@
               <dd><%= (@match.datetime.to_date.postponed? ? "Postponed" : @match.datetime.to_formatted_s(:kickoff_time)) %></dd>
               <% if !@match.pending? %>
               <dt>Elapsed:</dt>
-              <dd><%= (@match.elapsed == 'FT' ? 'Full Time' : @match.elapsed) %></dd>
+              <dd><%= (@match.finished? || @match.full_time? ? 'Full Time' : @match.elapsed) %><% if @match.full_time? %><span class="update_pending"> *</span><% end %></dd>
               <% end %>
             </dl>
           </td>
@@ -118,7 +118,7 @@
               <dd><%= (@match.datetime.to_date.postponed? ? "Postponed" : @match.datetime.to_formatted_s(:kickoff_time)) %></dd>
               <% if !@match.pending? %>
               <dt>Elapsed:</dt>
-              <dd><%= @match.elapsed %></dd>
+              <dd><%= @match.elapsed %><% if @match.full_time? %><span class="update_pending"> *</span><% end %></dd>
               <% end %>
             </dl>
           </td>

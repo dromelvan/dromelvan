@@ -1,7 +1,8 @@
 class UploadMatchStatsJson < UploadJson
-  def initialize(match, update_previous_points_and_goals)
+  def initialize(match, update_previous_points_and_goals, finish)
     @match = match
     @update_previous_points_and_goals = update_previous_points_and_goals
+    @finish = finish
   end
 
   private
@@ -215,7 +216,11 @@ class UploadMatchStatsJson < UploadJson
         end
 
         if match.elapsed == "FT"
-          @match.status = :finished
+          if @finish
+            @match.status = :finished
+          else
+            @match.status = :full_time
+          end
         else
           @match.elapsed = match.elapsed
         end

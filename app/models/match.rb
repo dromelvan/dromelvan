@@ -10,7 +10,7 @@ class Match < ActiveRecord::Base
   has_many :substitutions, dependent: :restrict_with_exception
   has_many :team_match_squad_stats, dependent: :restrict_with_exception
 
-  enum status: [ :pending, :active, :finished ]
+  enum status: [ :pending, :active, :finished, :full_time ]
 
   # This would let us enter times in UTC and save them in that time in UTC.
   # I.e 15:00 would be save as 15:00 UTC instead of 13:00 UTC. But I'm not
@@ -175,7 +175,7 @@ class Match < ActiveRecord::Base
     def update_elapsed
       if pending?
         self.elapsed = "N/A"
-      elsif finished?
+      elsif finished? || full_time?
         self.elapsed = "FT"
       end
     end

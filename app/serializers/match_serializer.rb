@@ -10,6 +10,8 @@ class MatchSerializer < BaseSerializer
         1
       elsif object.finished?
         2
+      elsif object.full_time?
+        3
       end
     end
     

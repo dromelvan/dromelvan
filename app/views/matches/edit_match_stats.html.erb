@@ -16,7 +16,11 @@
       <div class="form-group">
         <%= label_tag :update_previous_points_and_goals, "Update previous points and goals:" %>
         <%= check_box_tag :update_previous_points_and_goals, "true", true %>
-      </div>      
+      </div>
+      <div class="form-group">
+        <%= label_tag :finish, "Finish the match:" %>
+        <%= check_box_tag :finish, "true", false %>
+      </div>            
     </fieldset>
     <% end %>
   </div>

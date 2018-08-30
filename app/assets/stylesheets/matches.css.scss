@@ -205,3 +205,8 @@ div.matches.show {
         @include make-lg-column(3);        
     }
 }
+
+span.update_pending {
+    color: $negative-color;
+    font-weight: bold;
+}
