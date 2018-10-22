@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   get '/rules' => 'home#rules'
   get '/about' => 'home#about'
-  
+
   get '/search' => 'search#search'
   get '/live_search' => 'search#live_search'
 
@@ -21,9 +21,9 @@ Rails.application.routes.draw do
       controller: 'devise/registrations',
       as: :user_registration do
         get :cancel
-      end  
+      end
   end
-  
+
   concern :select do
     collection do
       post :select
@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     member do
       post :select_season
       get '/:season_id', action: :show, as: 'show_season'
-    end    
+    end
   end
 
   concern :table do
@@ -54,7 +54,7 @@ Rails.application.routes.draw do
       get :show_d11_teams, path: 'd11-teams'
     end
   end
-  
+
   concern :stats do
     collection do
       post :select_stats
@@ -72,7 +72,7 @@ Rails.application.routes.draw do
       get '/:season_id/fixtures', action: :show_fixtures, as: 'show_fixtures'
     end
   end
-  
+
   concern :transfer_bids do
     collection do
       post :select_transfer_bids
@@ -96,15 +96,15 @@ Rails.application.routes.draw do
       get :pend
       get :activate
       get :finish
-    end    
+    end
   end
-  
+
   concern :current do
     collection do
       get :current
-    end    
+    end
   end
-  
+
   resources :seasons, only: [:index, :show], concerns: [:select]
   resources :teams, only: [:show], concerns: [:select_season, :select, :fixtures]
   resources :players, only: [:show, :new, :create], concerns: [:select_season] do
@@ -125,7 +125,7 @@ Rails.application.routes.draw do
   resources :match_days, only: [:show, :update], concerns: [:select, :status_enum, :current], path: 'match-days' do
     member do
       get 'update_stats'
-    end        
+    end
   end
   resources :matches, only: [:show, :update], concerns: [:select, :status_enum] do
     member do
@@ -141,7 +141,12 @@ Rails.application.routes.draw do
   resources :d11_leagues, only: [:show], concerns: [:select, :table, :d11_teams], path: 'd11-leagues'
   resources :d11_match_days, only: [:show, :update], concerns: [:select, :current], path: 'd11-match-days'
   resources :d11_matches, only: [:show], concerns: [:select], path: 'd11-matches'
-  resources :d11_teams, only: [:show], concerns: [:select_season, :select, :fixtures], path: 'd11-teams'
+  resources :d11_teams, only: [:show], concerns: [:select_season, :select, :fixtures], path: 'd11-teams' do
+    member do
+      get 'edit_club_crest'
+      put 'update_club_crest'
+    end
+  end
   resources :transfer_windows, only: [:show, :new, :create], concerns: [:select], path: 'transfer-windows'
   resources :transfer_days, only: [:show], concerns: [:select, :transfer_bids, :transfer_listings, :status_enum], path: 'transfer-days'
   resources :transfer_listings, only: [:index, :create, :destroy]
@@ -151,7 +156,7 @@ Rails.application.routes.draw do
   resources :player_season_stats, only: [:index]
   resources :d11_team_table_stats, only: [:index]
   resources :posts, except: [:destroy]
-    
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   namespace :api do
@@ -164,7 +169,7 @@ Rails.application.routes.draw do
       resources :matches, only: [:show, :update] do
         member do
           put 'update_match_stats'
-        end        
+        end
         collection do
           get 'by_date/:date', action: :by_date, as: 'by_date'
         end
@@ -172,7 +177,7 @@ Rails.application.routes.draw do
       resources :users, only: [] do
         collection do
           get 'request_authentication_token'
-        end                
+        end
       end
       resources :teams, only: [] do
         collection do
@@ -184,12 +189,12 @@ Rails.application.routes.draw do
         collection do
           get 'named/:name', action: :named, as: 'named'
         end
-      end            
+      end
       resources :match_days, only: [:show] do
         member do
           put 'activate'
           put 'finish'
-        end                
+        end
         collection do
           get 'current'
           get 'upcoming'
@@ -198,5 +203,5 @@ Rails.application.routes.draw do
       end
     end
   end
-  
+
 end

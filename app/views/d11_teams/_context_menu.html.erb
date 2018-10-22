@@ -3,4 +3,8 @@
     <li class="dropdown-header"><%= d11_team.name %></li>
     <li><%= link_to "D11 team squad #{@season.name}", show_season_d11_team_path(d11_team, @season), class: "model-link" %></li>
     <li><%= link_to "Fixtures and results #{@season.name}", show_fixtures_d11_team_path(d11_team, @season), class: "model-link" %></li>
+    <% if administrator_signed_in? || (!current_user.active_d11_team.nil? && current_user.active_d11_team == d11_team) %>
+    <li><%= link_to "Change club crest", edit_club_crest_d11_team_path(d11_team), data: { toggle: "modal", target: "#d11-modal" } %></li>  
+    <% end %>
+
 <% end %>

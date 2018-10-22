@@ -1,0 +1,25 @@
+<%
+  provide :title, "Change #{@d11_team.name} Club Crest"
+%>
+
+<h2><%= @d11_team.name %></h2>
+
+<div class="section">
+  <div class="image-container player-photo related-section">
+    <%= render 'd11_teams/club_crest', d11_team: @d11_team %>
+  </div>
+  <div class="main-section">
+    <%= form_for @d11_team, url: {action: "update_club_crest"}, html: { method: :put } do |f| %>
+    <fieldset>
+      <div class="form-group">
+        <%= f.label :new_club_crest %>
+        <%= f.file_field :club_crest, class: 'form-control' %>
+      </div>
+      <div>
+        The image will be cropped and/or resized to a maximum size of 128x128 pixels.
+        If the result of this operation is not satisfactory, the owner will have to perform it manually before uploading the image.
+      </div>
+    </fieldset>
+    <% end %>
+  </div>
+</div>
