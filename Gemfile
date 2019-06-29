@@ -48,7 +48,7 @@ end
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record in dev and test
-  gem 'sqlite3'  
+  gem 'sqlite3'
   gem 'rspec-rails', '~> 3.0.0'
 end
 
@@ -61,10 +61,10 @@ end
 group :production do
   # Use postgres in production
   gem 'pg'
-  
+
   # Application servers. Only one of these will be needed in the end (!)
-  #gem 'puma'
-  gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"  
+  gem "puma", "3.11.4"
+  #gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"  
 end
 
 #ActiveRecord session store
