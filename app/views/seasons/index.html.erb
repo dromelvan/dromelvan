@@ -1,6 +1,6 @@
 <% provide :title, "Seasons"
    provide :breadcrumbs, breadcrumbs([ :index ]) %>
- 
+
 <h1>Seasons</h1>
 
 <p>Winners and runners up of the current and previous seasons.</p>
@@ -27,9 +27,9 @@
           <p class="stats">
             <span class="points"><span class="value"><%= d11_team_table_stat.points %></span> points</span>
             <span class="goals"><span class="value"><%= d11_team_table_stat.goals_for %></span> goals</span>
-          </p>          
+          </p>
         </div>
-        
+
         <div class="premier-league-winner brief-info image-container">
           <% team_table_stat = season.premier_league.winner %>
           <h3><%= render team_table_stat.team %></h3>
@@ -38,20 +38,22 @@
           <p class="stats">
             <span class="points"><span class="value"><%= team_table_stat.points %></span> points</span>
             <span class="goals"><span class="value"><%= team_table_stat.goal_difference %></span> gd</span>
-          </p>                    
+          </p>
         </div>
-        
+
         <div class="most-valuable-player brief-info image-container">
           <% player_season_stat = season.winner %>
+          <% if !player_season_stat.nil? %>
           <h3><%= render player_season_stat.player %> (<%= render player_season_stat.player.season_info(season).team, label: :code, club_crest: :hide %>)</h3>
           <p class="most-valuable-player">Most Valuable Player</p>
           <%= render "players/player_photo", player: player_season_stat.player %>
           <p class="stats">
             <span class="points"><span class="value"><%= player_season_stat.points %></span> points</span>
             <span class="goals"><span class="value"><%= player_season_stat.goals %></span> goals</span>
-          </p>                              
+          </p>
+          <% end %>
         </div>
-        
+
         <div class="runners-up brief-info">
           <h3>Runners Up</h3>
           <h4>Drömelvan</h4>
@@ -60,22 +62,24 @@
             <li><%= render "d11_teams/club_crest", d11_team: d11_team_table_stat.d11_team, style: :icon %> <%= render d11_team_table_stat.d11_team %> <%= d11_team_table_stat.points %>p</li>
             <% end %>
           </ul>
-          
+
           <h4>Premier League</h4>
           <ul id="premier-league-runners-up">
             <% season.premier_league.runners_up.each do |team_table_stat| %>
             <li><%= render team_table_stat.team %> <%= team_table_stat.points %>p</li>
             <% end %>
           </ul>
-          
+
+          <% if !season.runners_up.nil? %>
           <h4>Most Valuable Players</h4>
           <ul id="most-valuable-player-runners-up">
             <% season.runners_up.each do |player_season_stat| %>
             <li><%= render "players/player_photo", player: player_season_stat.player, style: :icon %> <%= render player_season_stat.player %> (<%= render player_season_stat.player.season_info(season).team, label: :code, club_crest: :hide %>) <%= player_season_stat.points %>p</li>
-            <% end %>            
-          </ul>          
-        </div>        
-      </div>      
+            <% end %>
+          </ul>
+          <% end %>
+        </div>
+      </div>
     </div>
     <% end %>
   </div>
