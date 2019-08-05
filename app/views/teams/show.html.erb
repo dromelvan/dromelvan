@@ -1,7 +1,7 @@
 <% provide :title, @team.name
    provide :breadcrumbs, breadcrumbs([ :class , :select_name, :select_season ])
    team_season_squad_stat = @team.team_season_squad_stats.where(season: @season).first
-   %> 
+   %>
 
 <div class="header-container">
   <h1><%= @team.name %> <%= render 'context_menu' %></h1>
@@ -14,7 +14,7 @@
       <div class="panel-heading">
         <h2>Team profile</h2>
       </div>
-      
+
       <div class="section panel-body">
         <div class="image-container club-crest">
           <%= render 'teams/club_crest', team: @team %>
@@ -35,10 +35,10 @@
             <dt id="motto">Motto:</dt>
             <dd id="motto"><%= @team.motto %></dd>
             <% end %>
-          </dl>          
+          </dl>
         </div>
-        
-        
+
+
         <div class="season-information-container">
           <h3>Season <%= @season.name %></h3>
           <% if !team_season_squad_stat.nil? %>
@@ -46,21 +46,21 @@
             <dt>Points:</dt>
             <dd><%= team_season_squad_stat.points %></dd>
             <dt>Avg. rating:</dt>
-            <dd><%= team_season_squad_stat.rating_s %></dd>          
+            <dd><%= team_season_squad_stat.rating_s %></dd>
             <dt>Goals/assists:</dt>
-            <dd><%= image_tag "match-events/goal.png", alt: "Goals", title: "Goals", class: "match-event-icon" %> <%= team_season_squad_stat.goals %> <%= image_tag "match-events/assist.png", alt: "Assists", title: "Assists", class: "match-event-icon" %>  <%= team_season_squad_stat.goal_assists %></dd>            
+            <dd><%= image_tag "match-events/goal.png", alt: "Goals", title: "Goals", class: "match-event-icon" %> <%= team_season_squad_stat.goals %> <%= image_tag "match-events/assist.png", alt: "Assists", title: "Assists", class: "match-event-icon" %>  <%= team_season_squad_stat.goal_assists %></dd>
             <dt>Cards:</dt>
             <dd><%= image_tag "match-events/yellow-card.png", alt: "Yellow Cards", title: "Yellow Cards", class: "match-event-icon" %> <%= team_season_squad_stat.yellow_cards %> <%= image_tag "match-events/red-card.png", alt: "Red Cards", title: "Red Cards", class: "match-event-icon" %>  <%= team_season_squad_stat.red_cards %></dd>
             <dt>MoM:</dt>
-            <dd><%= image_tag "match-events/mom.png", alt: "Man of the Match", title: "Man of the Match", class: "match-event-icon" %> <%= team_season_squad_stat.man_of_the_match %> <%= image_tag "match-events/shared-mom.png", alt: "Shared Man of the Match", title: "Shared Man of the Match", class: "match-event-icon" %>  <%= team_season_squad_stat.shared_man_of_the_match %></dd>                        
+            <dd><%= image_tag "match-events/mom.png", alt: "Man of the Match", title: "Man of the Match", class: "match-event-icon" %> <%= team_season_squad_stat.man_of_the_match %> <%= image_tag "match-events/shared-mom.png", alt: "Shared Man of the Match", title: "Shared Man of the Match", class: "match-event-icon" %>  <%= team_season_squad_stat.shared_man_of_the_match %></dd>
             <dt>Form:</dt>
-            <dd><%= render 'teams/team_points_form', team: @team, season: @season %></dd>            
-          </dl>          
+            <dd><%= render 'teams/team_points_form', team: @team, season: @season %></dd>
+          </dl>
           <% else %>
-          <p>Did not participate.</p>  
+          <p>Did not participate.</p>
           <% end %>
         </div>
-        
+
       </div>
     </div>
     <% end %>
@@ -79,11 +79,13 @@
 <div class="widget-container">
   <% player_season_stats = PlayerSeasonStat.by_team(@team).where(season: @season)
     if !player_season_stats.empty? then
-  %>  
+  %>
+  <% cache [ @team, :team_season_squad_stats ] do %>
   <div id="team-season-squad-stats" class="main-widget">
     <h3>Team squad <%= @season.name %></h2>
     <%= render 'player_season_stats/table', player_season_stats: player_season_stats %>
   </div>
+  <% end %>
   <% else %>
   <div class="main-widget">
   </div>
