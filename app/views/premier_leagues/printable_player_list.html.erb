@@ -1,4 +1,4 @@
-<% provide :title, "Available Players #{@premier_league.season.name}" %> 
+<% provide :title, "Available Players #{@premier_league.season.name}" %>
 <table class="printable-player-list">
   <%
     column = 1
@@ -11,7 +11,7 @@
     <td>
       <h4><%= render 'teams/club_crest', team: team_season_squad_stat.team, style: :icon %> <%= team_season_squad_stat.team.name %></h4>
       <ul>
-      <%      
+      <%
          player_season_infos = PlayerSeasonInfo
            .where(season: team_season_squad_stat.season, team: team_season_squad_stat.team)
            .order(:position_id).name_order
@@ -35,9 +35,9 @@
                      if player_match_stat.participated? && player_match_stat.match.goals_against(player_match_stat.team) == 0
                        clean_sheets = clean_sheets + 1
                      end
-                   end                
-              %>  
-              <span class="player-stats">(<%= player_season_stat.games_started %>+<%= player_season_stat.substitutions_on %>/<span class="<% if player_season_stat.points < 0 %>negative<% elsif player_season_stat.points > 0 %>positive<% end %>"><%= player_season_stat.points %><% if player_season_info.position_id == 4 %>+<%= clean_sheets %><% end %>p)</span></span></li>
+                   end
+              %>
+              <span class="player-stats">(<%= player_season_stat.games_started %>+<%= player_season_stat.substitutions_on %>/<span class="<% if player_season_stat.points < 0 %>negative<% elsif player_season_stat.points > 0 %>positive<% end %>"><%= player_season_stat.points %>p)</span></span></li>
               <% end %>
           <% end %>
         <% end %>
@@ -45,7 +45,7 @@
       </ul>
     </td>
   <% column += 1
-     if column > 5 %>       
+     if column > 5 %>
   </tr>
   <%   column = 1
        row += 1
