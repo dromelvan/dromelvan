@@ -9,7 +9,7 @@
 
 <div class="widget-container">
   <div class="main-widget">
-    <% cache [ team_season_squad_stat, team_season_squad_stat.season, :team_profile ] do %>
+    <% cache [ @team, @season, :team_profile ] do %>
     <div id="team-profile" class="standard-panel">
       <div class="panel-heading">
         <h2>Team profile</h2>
@@ -80,7 +80,7 @@
   <% player_season_stats = PlayerSeasonStat.by_team(@team).where(season: @season)
     if !player_season_stats.empty? then
   %>
-  <% cache [ team_season_squad_stat, team_season_squad_stat.season, :team_season_squad_stats ] do %>
+  <% cache [ @team, @season, :team_season_squad_stats ] do %>
   <div id="team-season-squad-stats" class="main-widget">
     <h3>Team squad <%= @season.name %></h2>
     <%= render 'player_season_stats/table', player_season_stats: player_season_stats %>
@@ -90,7 +90,7 @@
   <div class="main-widget">
   </div>
   <% end %>
-  <% cache [ team_season_squad_stat, team_season_squad_stat.season, :team_career_squad_stats ] do %>
+  <% cache [ @team, @season, :team_career_squad_stats ] do %>
   <div id="team-career-squad-stats" class="related-widget">
     <h3>All time squad stats</h2>
     <%= render 'team_career_squad_stats/simple_table', team_career_squad_stat: TeamCareerSquadStat.where(team: @team).first %>
