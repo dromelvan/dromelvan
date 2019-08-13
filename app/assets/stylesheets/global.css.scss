@@ -3,24 +3,24 @@ body {
     //font-weight: 300;
 
     background-color: whitesmoke;
-    
+
     .accessibility {
         display: none;
     }
-    
+
     main {
         background-color: white;
-                
+
         h1, h2, h3 {
             margin-top: 10px;
         }
-                
+
         h4 {
             min-height: 20px;
             margin-top: 0px;
             margin-bottom: 10px;
         }
-        
+
         p.administration-links,
         p.navigation-links {
             margin-top: -12px;
@@ -30,65 +30,65 @@ body {
         h1 + p.navigation-links {
             margin-top: -16px;
         }
-                                
+
         div.brief-info {
             @include make-sm-column(6);
             @include make-md-column(3);
-                        
+
             h3 {
                 margin-top: 0px;
-            }            
+            }
         }
-        
+
         div.image-container {
             text-align: center;
         }
-        
+
         span.points {
             span.value {
                 font-size: 46px;
             }
         }
-        
+
         span.ranking,
         span.goals {
             span.value {
                 font-size: 32px;
-            }        
+            }
         }
-        
+
         span.glyphicon-ok {
-            color: $positive-color;    
+            color: $positive-color;
         }
-        
+
         a.toggle,
         a.toggle:hover {
-            color: $d11-gray;            
+            color: $d11-gray;
         }
     }
-    
+
     main > div.content {
         @extend .container;
 //        padding-left: 10px;
 //        padding-right: 10px;
         padding-top: 20px;
         padding-bottom: 20px;
-                
+
         div.section {
             div.top-section {
                 @include make-lg-column(12);
             }
-            
+
             div.main-section {
                 @include make-md-column(8);
                 @include make-lg-column(9);
             }
-            
+
             div.related-section {
                 @include make-md-column(4);
                 @include make-lg-column(3);
             }
-            
+
             div.sub-section {
                 @include make-sm-column(6);
                 @include make-md-column(4);
@@ -99,12 +99,12 @@ body {
         ul.context-links {
             list-style: none;
             padding-left: 0px;
-            
+
             form.onchange-submit-form {
                 display: inline;
             }
         }
-        
+
         ul.validation-errors,
         ul.data-errors {
             padding-top: $alert-padding;
@@ -113,13 +113,13 @@ body {
                 padding-left: 0px;
             }
         }
-        
+
         span.ajax-selector {
             .disabled {
                 display: none;
             }
         }
-        
+
         div.photo-caption {
             h3 {
                 background: rgba(0, 0, 0, 0.6);
@@ -127,20 +127,21 @@ body {
                 padding: 7px 15px;
             }
         }
-        
+
+        dd.error-message,
         p.active-match-day {
             font-style: italic;
             color: $negative-color;
         }
     }
-    
+
     div.section {
         @extend .row;
     }
-        
+
     ul.related {
         @extend .list-inline;
-    }    
+    }
 }
 
 
@@ -148,15 +149,15 @@ body {
     header {
         display: none;
     }
-    
+
     nav {
-        display: none;        
+        display: none;
     }
-    
+
     ol.breadcrumb {
         display: none;
     }
-    
+
     a[href]:after {
       content: none;
     }
@@ -165,21 +166,21 @@ body {
         .team-simple-column,
         .result-simple-column {
             display: none;
-        }        
+        }
     }
-    
+
     table.league-table {
         .form-column {
             display: none;
         }
     }
-    
+
     div.content.match-days.show {
         div.related-section {
             page-break-before: always;
         }
     }
-    
+
     footer {
         display: none;
     }

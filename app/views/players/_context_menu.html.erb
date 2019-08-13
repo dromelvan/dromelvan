@@ -1,21 +1,19 @@
 <% player ||= @player %>
 <%= render layout: 'layouts/context_menu_dropdown', locals: { resource: player } do  %>
     <li class="dropdown-header"><%= player.name %></li>
-    <!--<li><a href="#">Add to shortlist (coming soon)</a></li>-->
-    <!--<li><a href="#">Remove from shortlist</a></li>-->
-    <!--<li><a href="#">Add to transfer list</a></li>-->
-    <!--<li><a href="#">Remove from transfer list</a></li>-->
-    <!--<li><a href="#">Make transfer bid</a></li>-->
     <% if user_signed_in? %>
-	<% player_season_info = player.player_season_infos.by_season(Season.current).take
-           if !player_season_info.nil? && player_season_info.d11_team == current_user.active_d11_team && !TransferDay.current.nil? && TransferDay.current.pending? %>
-	   <% if !player.transfer_listed? %>
-	    <li><%= link_to "Add to Transfer List", transfer_listings_path(player_id: player.id), method: :post %></li>
-    	   <% else %>
-            <li><%= link_to "Remove from Transfer List", transfer_listing_path(TransferDay.current.transfer_listings.where(player: player).take), method: :delete %></li>
-           <% end %>   
-        <% end %>
-	<% if !TransferDay.current.nil? && TransferDay.current.active? && player.transfer_listed? && !current_user.active_d11_team.nil? %>
+ 	  <% player_season_info = player.player_season_infos.by_season(Season.current).take
+      if !player_season_info.nil? && player_season_info.d11_team == current_user.active_d11_team && !TransferDay.current.nil? && TransferDay.current.pending? %>
+	   <% if !player.transfer_listed?
+         d11_team_season_squad_stat = player_season_info.d11_team.d11_team_season_squad_stats.where(season: Season.current).take
+         if d11_team_season_squad_stat.remaining_transfers > 0 %>
+	         <li><%= link_to "Add to Transfer List", transfer_listings_path(player_id: player.id), method: :post %></li>
+         <% end %>
+	   <% else %>
+      <li><%= link_to "Remove from Transfer List", transfer_listing_path(TransferDay.current.transfer_listings.where(player: player).take), method: :delete %></li>
+     <% end %>
+    <% end %>
+	  <% if !TransferDay.current.nil? && TransferDay.current.active? && player.transfer_listed? && !current_user.active_d11_team.nil? %>
 	    <%
 		d11_team_season_squad_stat = current_user.active_d11_team.d11_team_season_squad_stats.where(season: Season.current).first
 		transfer_bid = TransferDay.current.transfer_bids.where(player: player, d11_team: (!d11_team_season_squad_stat.nil? ? d11_team_season_squad_stat.d11_team : nil)).first
@@ -34,14 +32,14 @@
         <% player_season_info = player.player_season_infos.by_season(Season.current).take
            if !player_season_info.nil? %>
         <li><%= link_to "Edit Current Player Season Info", edit_player_season_info_path(player_season_info), data: { toggle: "modal", target: "#d11-modal" } %></li>
-        <% else %>        
+        <% else %>
         <li><%= link_to "Insert Player Season Info", create_current_player_season_info_path(player), method: :post %></li>
         <% end %>
 	<% if !TransferDay.current.nil? && TransferDay.current.active? && player.transfer_listed? %>
-        <li><%= link_to "Transfer Player", new_transfer_path(transfer: { player_id: player.id }), data: { toggle: "modal", target: "#d11-modal" } %></li>	    
+        <li><%= link_to "Transfer Player", new_transfer_path(transfer: { player_id: player.id }), data: { toggle: "modal", target: "#d11-modal" } %></li>
         <% end %>
         <% if !defined?(whoscored_id).nil? %>
             <li><%= link_to "Update WhoScored ID", update_whoscored_id_player_path(player, whoscored_id), method: :post %></li>
-        <% end %>            
+        <% end %>
     <% end %>
 <% end %>

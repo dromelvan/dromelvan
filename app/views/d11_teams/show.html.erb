@@ -1,7 +1,7 @@
 <% provide :title, @d11_team.name
    provide :breadcrumbs, breadcrumbs([ :class , :select_name, :select_season ])
    d11_team_season_squad_stat = @d11_team.d11_team_season_squad_stats.where(season: @season).first
-   %> 
+   %>
 
 <div class="header-container">
   <h1><%= @d11_team.name %> <%= render 'context_menu' %></h1>
@@ -14,24 +14,24 @@
       <div class="panel-heading">
         <h2>D11 team profile</h2>
       </div>
-      
+
       <div class="section panel-body">
         <div class="image-container club-crest">
           <%= render 'd11_teams/club_crest', d11_team: @d11_team %>
         </div>
-        
+
         <div class="d11-team-information-container">
           <h3>D11 team information</h3>
           <dl class="data">
             <dt>Owner:</dt>
             <dd><%= @d11_team.owner.name %></dd>
             <dt>Co owner:</dt>
-            <dd><%= (@d11_team.co_owner.nil? ? 'None' : @d11_team.co_owner.name) %></dd>            
+            <dd><%= (@d11_team.co_owner.nil? ? 'None' : @d11_team.co_owner.name) %></dd>
             <dt>Code:</dt>
-            <dd><%= @d11_team.code %></dd>            
+            <dd><%= @d11_team.code %></dd>
           </dl>
-        </div>        
-        
+        </div>
+
         <div class="season-information-container">
           <h3>Season <%= @season.name %></h3>
           <% if !d11_team_season_squad_stat.nil? %>
@@ -41,25 +41,37 @@
             <dt>Avg. rating:</dt>
             <dd><%= d11_team_season_squad_stat.rating_s %></dd>
             <dt>Goals/assists:</dt>
-            <dd><%= image_tag "match-events/goal.png", alt: "Goals", title: "Goals", class: "match-event-icon" %> <%= d11_team_season_squad_stat.goals %> <%= image_tag "match-events/assist.png", alt: "Assists", title: "Assists", class: "match-event-icon" %>  <%= d11_team_season_squad_stat.goal_assists %></dd>            
+            <dd><%= image_tag "match-events/goal.png", alt: "Goals", title: "Goals", class: "match-event-icon" %> <%= d11_team_season_squad_stat.goals %> <%= image_tag "match-events/assist.png", alt: "Assists", title: "Assists", class: "match-event-icon" %>  <%= d11_team_season_squad_stat.goal_assists %></dd>
             <dt>Cards:</dt>
             <dd><%= image_tag "match-events/yellow-card.png", alt: "Yellow Cards", title: "Yellow Cards", class: "match-event-icon" %> <%= d11_team_season_squad_stat.yellow_cards %> <%= image_tag "match-events/red-card.png", alt: "Red Cards", title: "Red Cards", class: "match-event-icon" %>  <%= d11_team_season_squad_stat.red_cards %></dd>
             <dt>MoM:</dt>
-            <dd><%= image_tag "match-events/mom.png", alt: "Man of the Match", title: "Man of the Match", class: "match-event-icon" %> <%= d11_team_season_squad_stat.man_of_the_match %> <%= image_tag "match-events/shared-mom.png", alt: "Shared Man of the Match", title: "Shared Man of the Match", class: "match-event-icon" %>  <%= d11_team_season_squad_stat.shared_man_of_the_match %></dd>                        
+            <dd><%= image_tag "match-events/mom.png", alt: "Man of the Match", title: "Man of the Match", class: "match-event-icon" %> <%= d11_team_season_squad_stat.man_of_the_match %> <%= image_tag "match-events/shared-mom.png", alt: "Shared Man of the Match", title: "Shared Man of the Match", class: "match-event-icon" %>  <%= d11_team_season_squad_stat.shared_man_of_the_match %></dd>
             <dt>Form:</dt>
-            <dd><%= render 'd11_teams/d11_team_points_form', d11_team: @d11_team, season: @season %></dd>            
+            <dd><%= render 'd11_teams/d11_team_points_form', d11_team: @d11_team, season: @season %></dd>
             <dt>Squad value:</dt>
             <dd>£<%= player_value d11_team_season_squad_stat.value %>m (max bid: £<%= player_value d11_team_season_squad_stat.max_bid %>m)</dd>
+            <% if @season == Season.current %>
+            <dt>Transfers:</dt>
+            <dd><%= d11_team_season_squad_stat.transfer_count %> (<%= d11_team_season_squad_stat.remaining_transfers %> remaining)</dd>
+            <dt>
+              &nbsp;
+            </dt>
+            <% if TransferDay.current.pending? && d11_team_season_squad_stat.remaining_transfers <= 0 then %>
+            <dd class="error-message">
+              This team can't transfer list more players.
+            </dd>
+            <% end %>
+            <% end %>
           </dl>
           <% else %>
-          <p>Did not participate.</p>  
-          <% end %>          
+          <p>Did not participate.</p>
+          <% end %>
         </div>
       </div>
     </div>
     <% end %>
   </div>
-  
+
 </div>
 
 <div class="widget-container">

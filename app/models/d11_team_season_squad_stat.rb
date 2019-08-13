@@ -1,14 +1,16 @@
 class D11TeamSeasonSquadStat < ActiveRecord::Base
   include D11TeamSquadStat
-    
+
   belongs_to :season, touch: true
 
   validates :season, presence: true
 
+  MAX_TRANSFERS = 13
+
   def value
     PlayerSeasonInfo.where(d11_team: d11_team).where(season: season).pluck(:value).sum
   end
- 
+
   def max_bid
     player_count = PlayerSeasonInfo.where(d11_team: d11_team).where(season: season).size
     if player_count < 11 then
@@ -17,7 +19,7 @@ class D11TeamSeasonSquadStat < ActiveRecord::Base
       max_bid
     else
       0
-    end    
+    end
   end
 
   def position_available(position)
@@ -46,9 +48,23 @@ class D11TeamSeasonSquadStat < ActiveRecord::Base
     end
     return 0
   end
-  
-  def player_match_stats    
+
+  def player_match_stats
     PlayerMatchStat.by_d11_team(d11_team).by_season(season)
   end
-  
+
+  def transfer_count
+    count = 0
+    season.transfer_windows.each do |transfer_window|
+      transfer_window.transfer_days.each do |transfer_day|
+        count = count + transfer_day.transfer_listings.where(d11_team: d11_team).size
+      end
+    end
+    return count
+  end
+
+  def remaining_transfers
+    return MAX_TRANSFERS - transfer_count
+  end
+
 end
