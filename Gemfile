@@ -63,7 +63,7 @@ group :production do
   gem 'pg'
 
   # Application servers. Only one of these will be needed in the end (!)
-  gem "puma", "3.11.4"
+  gem "puma", "3.12.4"
   #gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"  
 end
 
