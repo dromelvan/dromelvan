@@ -15,7 +15,7 @@ class D11TeamSeasonSquadStat < ActiveRecord::Base
     player_count = PlayerSeasonInfo.where(d11_team: d11_team).where(season: season).size
     if player_count < 11 then
       reserved = 5 * (11 - player_count)
-      max_bid = 500 - value - reserved + 5
+      max_bid = 600 - value - reserved + 5
       max_bid
     else
       0
