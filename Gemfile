@@ -78,7 +78,7 @@ gem 'omniauth-twitter'
 gem "omniauth-google-oauth2"
 
 # Resource administration with rails_admin
-gem 'rails_admin', '~> 0.6.2'
+gem 'rails_admin', '~> 1.4.3'
 
 # Bootstrap styling
 gem 'autoprefixer-rails', '5.0.0.1'
